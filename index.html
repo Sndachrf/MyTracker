@@ -1,0 +1,1000 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#211f1f">
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="icon" type="image/png" href="assets/mytracker-icon-192.png">
+  <link rel="apple-touch-icon" href="assets/mytracker-icon-192.png">
+  <title>MyTracker</title>
+  <script>try{document.documentElement.dataset.theme=localStorage.getItem("plan-tracker-theme")==="light"?"light":"dark"}catch{document.documentElement.dataset.theme="dark"}</script>
+  <style>
+    @font-face { font-family: "MyTracker Inter"; src: url("assets/Inter-Regular.otf") format("opentype"); font-style: normal; font-weight: 400; font-display: swap; }
+    @font-face { font-family: "MyTracker Inter"; src: url("assets/Inter-Bold.otf") format("opentype"); font-style: normal; font-weight: 700; font-display: swap; }
+    @font-face { font-family: "MyTracker Inter"; src: url("assets/Inter-Italic.otf") format("opentype"); font-style: italic; font-weight: 400; font-display: swap; }
+    :root {
+      color-scheme: dark;
+      --bg: #0d1424;
+      --side: #101a2d;
+      --surface: #151f33;
+      --raised: #1b2940;
+      --line: #293850;
+      --text: #eef3fb;
+      --muted: #a4b2c8;
+      --soft: #93a2b8;
+      --accent: #f08b69;
+      --accent-soft: #402d35;
+      --teal: #7bc9bb;
+      --pattern: #26334a;
+      --hover: #1a2740;
+      --selected: #202d45;
+      --glyph-bg: rgba(123,201,187,.1);
+      --status-bg: #21343e;
+      --pending-bg: #342e2b;
+      --track: #26344a;
+      --button-secondary: #23334b;
+      --border-strong: #35445c;
+      --notice-bg: rgba(64,45,53,.48);
+      --notice-text: #ead4cc;
+    }
+    :root[data-theme="light"] {
+      color-scheme: light;
+      --bg: #f3f5f7;
+      --side: #e9edf1;
+      --surface: #ffffff;
+      --raised: #f0f3f6;
+      --line: #c8d0d9;
+      --text: #17212b;
+      --muted: #465565;
+      --soft: #526273;
+      --accent: #b74326;
+      --accent-soft: #f8dfd7;
+      --teal: #126e62;
+      --pattern: #dce2e8;
+      --hover: #dce3e9;
+      --selected: #d6e0e8;
+      --glyph-bg: #e4f1ee;
+      --status-bg: #d9eee8;
+      --pending-bg: #f7e8d8;
+      --track: #d6dde5;
+      --button-secondary: #e5eaf0;
+      --border-strong: #b5c0ca;
+      --notice-bg: #f8e9e4;
+      --notice-text: #633322;
+    }
+    :root[data-theme="light"] body { background-image: radial-gradient(var(--pattern) .8px, transparent .8px); }
+    :root[data-theme="light"] .sidebar,
+    :root[data-theme="light"] .mobile-header,
+    :root[data-theme="light"] .bottom-nav { background: var(--side); }
+    :root[data-theme="light"] .card,
+    :root[data-theme="light"] .panel,
+    :root[data-theme="light"] dialog.plan-dialog { background: var(--surface); }
+    :root[data-theme="light"] .list-row,
+    :root[data-theme="light"] .support-item { background: var(--raised); }
+    :root[data-theme="light"] .nav-item:hover,
+    :root[data-theme="light"] .bottom-nav button:hover { background: var(--hover); }
+    :root[data-theme="light"] .nav-item[aria-current="page"],
+    :root[data-theme="light"] .bottom-nav button[aria-current="page"] { background: var(--selected); }
+    :root[data-theme="light"] .button.secondary { border-color: var(--line); background: var(--button-secondary); color: var(--text); }
+    :root[data-theme="light"] .button:not(.secondary):not(.ghost):not(.danger) { background: var(--accent); color: #fff; }
+    :root[data-theme="light"] .button.danger { border-color: #dbb5aa; background: #f8e9e4; color: #8d321a; }
+    :root[data-theme="light"] .field select,
+    :root[data-theme="light"] .field input:not([type="checkbox"]):not([type="file"]),
+    :root[data-theme="light"] .field textarea,
+    :root[data-theme="light"] .mapping-row select { border-color: var(--line); background: var(--surface); color: var(--text); }
+    :root[data-theme="light"] .empty-state,
+    :root[data-theme="light"] .upload-zone { border-color: var(--border-strong); background: #f8fafb; }
+    :root[data-theme="light"] .import-step { background: var(--raised); }
+    :root[data-theme="light"] .notice { border-color: var(--accent); background: var(--notice-bg); color: var(--notice-text); }
+    :root[data-theme="light"] .notice.info { border-color: var(--teal); background: #e5f0ee; color: var(--muted); }
+    :root[data-theme="light"] .status { background: var(--status-bg); color: #125d51; }
+    :root[data-theme="light"] .status.pending { background: var(--pending-bg); color: #74420c; }
+    :root[data-theme="light"] .week-track { background: var(--track); }
+    :root[data-theme="light"] .week-fill,
+    :root[data-theme="light"] .routing-role,
+    :root[data-theme="light"] .eyebrow { color: var(--teal); }
+    :root[data-theme="light"] .glyph-box { background: var(--glyph-bg); color: var(--teal); }
+    :root[data-theme="light"] .routing-row,
+    :root[data-theme="light"] th,
+    :root[data-theme="light"] td { border-color: var(--line); }
+    :root[data-theme="light"] .topbar { border-bottom-color: var(--line); }
+    :root[data-theme="light"] .button:focus-visible { outline-color: var(--teal); }
+    .theme-toggle { width: 44px; min-height: 44px; padding: 0; border-color: var(--line); background: var(--surface); color: var(--text); }
+    .theme-toggle .theme-icon { font-size: 18px; line-height: 1; }
+    :root {
+      font-family: "MyTracker Inter", Arial, sans-serif;
+      color: var(--text);
+      background: var(--bg);
+      font-synthesis: none;
+      text-rendering: optimizeLegibility;
+    }
+    * { box-sizing: border-box; }
+    html { min-width: 320px; scroll-behavior: smooth; }
+    body {
+      min-width: 320px; min-height: 100vh; margin: 0; color: var(--text);
+      background-color: var(--bg);
+      background-image: radial-gradient(var(--pattern) .8px, transparent .8px);
+      background-size: 20px 20px;
+      font-size: 14px; line-height: 1.5;
+    }
+    button, input, select { font: inherit; }
+    button, a, label[for] { -webkit-tap-highlight-color: transparent; }
+    button:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible {
+      outline: 2px solid var(--teal); outline-offset: 3px;
+    }
+    button { color: inherit; }
+    .app-shell { min-height: 100vh; display: grid; grid-template-columns: 232px minmax(0,1fr); }
+    .sidebar {
+      position: sticky; top: 0; height: 100vh; display: flex; flex-direction: column; gap: 28px;
+      padding: 23px 16px; border-right: 1px solid var(--line); background: rgba(16,26,45,.97);
+    }
+    .brand { display: flex; align-items: center; gap: 11px; padding: 0 10px; font-size: 15px; font-weight: 600; letter-spacing: -.02em; }
+    .brand-mark { position: relative; width: 44px; height: 44px; display: flex; flex: 0 0 auto; align-items: center; justify-content: center; overflow: hidden; border-radius: 9px; background: transparent; }
+    .brand-mark img { position: absolute; top: 50%; left: 50%; width: 97px; height: 97px; max-width: none; transform: translate(-50%,-50%); object-fit: contain; }
+    .nav-group-title { margin: 0 0 8px; padding: 0 11px; color: var(--soft); font-size: 10px; font-weight: 600; letter-spacing: .12em; text-transform: uppercase; }
+    .nav-list { display: grid; gap: 4px; }
+    .nav-item {
+      min-height: 40px; display: flex; align-items: center; gap: 11px; padding: 0 11px;
+      border: 0; border-radius: 9px; background: transparent; color: var(--muted); text-align: left; cursor: pointer;
+    }
+    .nav-item:hover { background: #1a2740; color: var(--text); }
+    .nav-item[aria-current="page"] { color: var(--text); background: #202d45; box-shadow: inset 2px 0 var(--accent); }
+    .nav-glyph { width: 20px; color: var(--soft); text-align: center; font-size: 15px; }
+    .nav-item[aria-current="page"] .nav-glyph { color: var(--accent); }
+    .side-note { margin-top: auto; padding: 14px 13px; border: 1px solid var(--line); border-radius: 12px; background: var(--surface); color: var(--muted); }
+    .side-note strong { display: block; margin-bottom: 5px; color: var(--text); font-size: 12px; font-weight: 500; }
+    .side-note span { display: block; font-size: 11px; }
+    .app-main { min-width: 0; padding: 0 34px 44px; }
+    .topbar { height: 70px; display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 28px; border-bottom: 1px solid rgba(41,56,80,.75); }
+    .breadcrumb { color: var(--muted); font-size: 12px; }
+    .breadcrumb strong { color: var(--text); font-weight: 500; }
+    .today-date { color: var(--muted); font-size: 12px; }
+    .topbar-tools { display: flex; align-items: center; gap: 14px; }
+    .mobile-brand { display: none; }
+    .page-head { display: flex; align-items: end; justify-content: space-between; gap: 18px; margin-bottom: 22px; }
+    .eyebrow { margin: 0 0 6px; color: var(--teal); font-size: 10px; font-weight: 600; letter-spacing: .14em; text-transform: uppercase; }
+    h1 { margin: 0; font-size: clamp(25px,3vw,34px); line-height: 1.12; font-weight: 500; letter-spacing: -.045em; }
+    h2 { margin: 0; font-size: 14px; font-weight: 500; letter-spacing: -.01em; }
+    h3 { margin: 0; font-size: 12px; font-weight: 500; }
+    .subtitle { margin: 9px 0 0; color: var(--muted); font-size: 13px; }
+    .button { min-height: 40px; display: inline-flex; align-items: center; justify-content: center; gap: 8px; padding: 0 14px; border: 1px solid transparent; border-radius: 9px; background: var(--accent); color: #211a1d; font-size: 12px; font-weight: 600; text-decoration: none; cursor: pointer; }
+    .button:hover { filter: brightness(1.08); }
+    .button.secondary { border-color: #34455e; background: #23334b; color: var(--text); }
+    .button.ghost { border-color: var(--line); background: transparent; color: var(--muted); }
+    .button:disabled { cursor: not-allowed; opacity: .48; }
+    .view[hidden] { display: none !important; }
+    .summary-grid { display: grid; grid-template-columns: repeat(3,minmax(0,1fr)); gap: 13px; }
+    .card, .panel { min-width: 0; padding: 17px; border: 1px solid var(--line); border-radius: 13px; background: rgba(21,31,51,.97); }
+    .card-head, .panel-head { display: flex; align-items: center; justify-content: space-between; gap: 9px; }
+    .card-label, .panel-subtitle { color: var(--muted); font-size: 11px; }
+    .card-value { margin-top: 15px; font-size: 15px; font-weight: 500; }
+    .card-foot { margin-top: 4px; color: var(--soft); font-size: 10px; }
+    .glyph-box { width: 34px; height: 34px; display: grid; flex: 0 0 auto; place-items: center; border-radius: 9px; color: var(--teal); background: rgba(123,201,187,.1); font-size: 16px; }
+    .content-grid { display: grid; grid-template-columns: minmax(0,1.5fr) minmax(240px,.9fr); gap: 13px; margin-top: 14px; }
+    .panel-subtitle { margin-top: 4px; }
+    .empty-state { min-height: 176px; display: flex; flex-direction: column; align-items: center; justify-content: center; margin-top: 16px; padding: 18px; border: 1px dashed #35445c; border-radius: 10px; background: radial-gradient(circle at 50% 0%,rgba(123,201,187,.06),transparent 60%); text-align: center; }
+    .empty-state strong { margin-top: 10px; font-size: 12px; font-weight: 500; }
+    .empty-state p { max-width: 320px; margin: 4px 0 11px; color: var(--muted); font-size: 11px; }
+    .quiet { color: var(--muted); }
+    .soft { color: var(--soft); }
+    .view-stack { display: grid; gap: 13px; }
+    .section-gap { margin-top: 14px; }
+    .inline-list { display: grid; gap: 8px; margin-top: 15px; }
+    .list-row { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 12px; border-radius: 9px; background: #19263b; }
+    .list-row-main { min-width: 0; }
+    .list-row-main strong { display: block; font-size: 12px; font-weight: 500; overflow-wrap: anywhere; }
+    .list-row-main span { display: block; margin-top: 3px; color: var(--muted); font-size: 10px; overflow-wrap: anywhere; }
+    .plan-actions { display: flex; flex: 0 0 auto; align-items: center; gap: 7px; }
+    .button.danger { border-color: #67404a; background: #382632; color: #ffb0a1; }
+    .status { flex: 0 0 auto; padding: 5px 8px; border-radius: 99px; background: #21343e; color: var(--teal); font-size: 10px; }
+    .status.pending { background: #342e2b; color: #e6b6a2; }
+    .form-grid { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 12px; margin-top: 15px; }
+    .field { display: grid; gap: 6px; min-width: 0; }
+    .field label, .field-label { color: var(--muted); font-size: 11px; }
+    .field select, .field input:not([type="checkbox"]):not([type="file"]), .field textarea { width: 100%; min-height: 40px; padding: 8px 10px; border: 1px solid #35445c; border-radius: 8px; background: #101a2d; color: var(--text); }
+    .field textarea { min-height: 82px; resize: vertical; }
+    .field select:focus-visible, .field input:focus-visible { outline: 2px solid var(--teal); outline-offset: 2px; }
+    .import-steps { display: flex; flex-wrap: wrap; align-items: center; gap: 7px; margin: 17px 0; color: var(--soft); font-size: 10px; }
+    .import-step { padding: 6px 9px; border: 1px solid var(--line); border-radius: 7px; background: #121d30; }
+    .import-step b { margin-right: 4px; color: var(--accent); font-weight: 500; }
+    .upload-zone { display: grid; justify-items: center; gap: 6px; padding: 24px 14px; border: 1px dashed #50627e; border-radius: 11px; background: rgba(18,29,48,.8); text-align: center; cursor: pointer; }
+    .upload-zone:hover { border-color: var(--teal); background: #15243a; }
+    .upload-zone strong { font-size: 12px; font-weight: 500; }
+    .upload-zone span { color: var(--muted); font-size: 10px; }
+    .upload-zone input { max-width: 100%; color: var(--muted); font-size: 10px; }
+    .notice { margin-top: 12px; padding: 11px 12px; border-left: 2px solid var(--accent); background: rgba(64,45,53,.48); color: #ead4cc; font-size: 11px; line-height: 1.55; }
+    .notice.info { border-color: var(--teal); background: rgba(32,51,74,.62); color: var(--muted); }
+    .notice strong { color: var(--text); font-weight: 500; }
+    .routing-list { display: grid; gap: 7px; margin-top: 13px; }
+    .routing-row { display: grid; grid-template-columns: minmax(130px,.8fr) minmax(0,1.4fr); gap: 12px; padding: 10px 11px; border-bottom: 1px solid rgba(41,56,80,.72); }
+    .routing-row:last-child { border-bottom: 0; }
+    .routing-sheet { color: var(--text); font-size: 11px; overflow-wrap: anywhere; }
+    .routing-role { color: var(--teal); font-size: 11px; font-weight: 500; }
+    .routing-detail { display: block; margin-top: 3px; color: var(--muted); font-size: 10px; line-height: 1.5; }
+    .routing-why { display: block; margin-top: 4px; color: var(--soft); font-size: 10px; line-height: 1.5; }
+    .mapping-list { display: grid; gap: 8px; margin-top: 13px; }
+    .mapping-row { display: grid; grid-template-columns: minmax(120px,.8fr) minmax(0,1.2fr); align-items: center; gap: 12px; }
+    .mapping-row label { color: var(--muted); font-size: 11px; }
+    .mapping-row select { width: 100%; min-height: 38px; padding: 7px 9px; border: 1px solid #35445c; border-radius: 8px; background: #101a2d; color: var(--text); }
+    .table-wrap { width: 100%; margin-top: 13px; overflow-x: auto; border: 1px solid var(--line); border-radius: 9px; }
+    table { width: 100%; border-collapse: collapse; text-align: left; font-size: 10px; }
+    th, td { padding: 9px 10px; border-bottom: 1px solid rgba(41,56,80,.72); vertical-align: top; }
+    th { color: var(--soft); font-weight: 500; white-space: nowrap; }
+    td { color: var(--muted); }
+    tr:last-child td { border-bottom: 0; }
+    .table-empty { padding: 15px; color: var(--muted); font-size: 11px; }
+    .inline-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; margin-top: 14px; }
+    .completion-control { display: flex; align-items: flex-start; gap: 9px; }
+    .completion-control input { width: 17px; height: 17px; margin: 1px 0 0; accent-color: var(--teal); }
+    .completion-control label { cursor: pointer; }
+    .completion-control strong { display: block; font-size: 12px; font-weight: 500; }
+    .completion-control span { display: block; margin-top: 3px; color: var(--muted); font-size: 10px; }
+    .progress-weeks { display: grid; gap: 12px; margin-top: 15px; }
+    .week-row { display: grid; grid-template-columns: 104px minmax(0,1fr) auto; align-items: center; gap: 12px; }
+    .week-label { color: var(--muted); font-size: 10px; }
+    .week-track { height: 8px; overflow: hidden; border-radius: 99px; background: #26344a; }
+    .week-fill { height: 100%; border-radius: inherit; background: var(--teal); }
+    .week-count { color: var(--soft); font-size: 10px; white-space: nowrap; }
+    .support-list { display: grid; gap: 8px; margin-top: 13px; }
+    .support-item { padding: 10px 11px; border-radius: 9px; background: #19263b; }
+    .support-item strong { display: block; font-size: 11px; font-weight: 500; }
+    .support-item span { display: block; margin-top: 3px; color: var(--muted); font-size: 10px; }
+    .support-item small { display: block; margin-top: 5px; color: var(--soft); font-size: 10px; line-height: 1.5; }
+    .plan-entry { display: grid; gap: 7px; }
+    .plan-details { padding: 0 11px 4px; color: var(--muted); }
+    .plan-details summary { width: fit-content; min-height: 36px; display: flex; align-items: center; color: var(--teal); font-size: 11px; cursor: pointer; }
+    .plan-details summary:hover { color: var(--text); }
+    .plan-details .support-list { padding: 0 0 8px; }
+    dialog.plan-dialog { width: min(440px,calc(100% - 24px)); padding: 0; border: 1px solid #35445c; border-radius: 14px; background: #121d30; color: var(--text); }
+    dialog.plan-dialog::backdrop { background: rgba(4,8,16,.72); backdrop-filter: blur(3px); }
+    .dialog-form { display: grid; gap: 14px; padding: 21px; }
+    .dialog-form p { margin: -7px 0 0; color: var(--muted); font-size: 11px; }
+    .dialog-actions { display: flex; flex-wrap: wrap; gap: 8px; padding-top: 4px; }
+    .manual-session-form { margin-top: 16px; padding-top: 15px; border-top: 1px solid var(--line); }
+    .manual-session-form[hidden] { display: none; }
+    .mobile-header, .bottom-nav { display: none; }
+    @media (max-width: 760px) {
+      .app-shell { display: block; min-height: 100vh; }
+      .sidebar { display: none; }
+      .mobile-header { position: sticky; z-index: 5; top: 0; min-height: 58px; display: flex; align-items: center; justify-content: space-between; gap: 10px; padding: 10px 16px; border-bottom: 1px solid var(--line); background: rgba(16,26,45,.97); }
+      .mobile-header .brand { padding: 0; font-size: 13px; }
+      .mobile-header .brand-mark { width: 42px; height: 42px; }
+      .mobile-header .brand-mark img { width: 92px; height: 92px; }
+      .mobile-header .today-date { font-size: 10px; }
+      .app-main { padding: 0 16px 24px; }
+      .topbar { height: 45px; margin-bottom: 20px; }
+      .content-grid { grid-template-columns: 1fr; }
+      .summary-grid { grid-template-columns: repeat(2,minmax(0,1fr)); }
+      .summary-grid .card:last-child { grid-column: 1 / -1; }
+      .page-head { align-items: flex-start; flex-direction: column; gap: 14px; }
+      .page-head .button { width: auto; min-height: 36px; align-self: flex-start; padding: 0 12px; }
+      .topbar .today-date { display: none; }
+      .topbar-tools { margin-left: auto; }
+      .theme-toggle { width: 40px; min-height: 40px; }
+      .bottom-nav { position: sticky; z-index: 6; bottom: 0; display: grid; grid-template-columns: repeat(6,minmax(0,1fr)); padding: 8px 7px max(8px,env(safe-area-inset-bottom)); border-top: 1px solid var(--line); background: rgba(16,26,45,.98); }
+      .bottom-nav button { min-width: 0; min-height: 56px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4px; padding: 5px 2px; border: 0; border-radius: 9px; background: transparent; color: var(--soft); font-size: 10px; cursor: pointer; }
+      .bottom-nav button:hover, .bottom-nav button[aria-current="page"] { background: #202d45; color: var(--text); }
+      .bottom-nav .nav-glyph { width: auto; font-size: 18px; }
+    }
+    @media (max-width: 520px) {
+      .app-main { padding-right: 13px; padding-left: 13px; }
+      .summary-grid { gap: 9px; }
+      .card, .panel { padding: 14px; }
+      .content-grid { gap: 10px; }
+      .form-grid { grid-template-columns: 1fr; }
+      .routing-row, .mapping-row { grid-template-columns: 1fr; gap: 4px; }
+      .week-row { grid-template-columns: 82px minmax(0,1fr) auto; gap: 8px; }
+      .import-steps { gap: 5px; }
+      .import-step { padding: 5px 7px; }
+      .topbar { margin-bottom: 17px; }
+      h1 { font-size: 27px; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { scroll-behavior: auto !important; transition-duration: .01ms !important; }
+    }
+  </style>
+</head>
+<body>
+  <div class="app-shell">
+    <aside class="sidebar" aria-label="Navigasi MyTracker">
+      <div class="brand"><span class="brand-mark"><img src="assets/mytracker-logo.png" alt=""></span><span>MyTracker</span></div>
+      <div>
+        <p class="nav-group-title">Personal Plan</p>
+        <nav class="nav-list" aria-label="Menu utama">
+          <button class="nav-item" data-view="dashboard" aria-current="page"><span class="nav-glyph" aria-hidden="true">⌂</span>Dashboard</button>
+          <button class="nav-item" data-view="sessions"><span class="nav-glyph" aria-hidden="true">☷</span>Checklist session</button>
+          <button class="nav-item" data-view="plans"><span class="nav-glyph" aria-hidden="true">▦</span>Plans</button>
+          <button class="nav-item" data-view="progress"><span class="nav-glyph" aria-hidden="true">⌁</span>Progress</button>
+        </nav>
+      </div>
+      <div>
+        <p class="nav-group-title">Settings</p>
+        <nav class="nav-list" aria-label="Menu pengaturan">
+          <button class="nav-item" data-view="import"><span class="nav-glyph" aria-hidden="true">⇧</span>Import Plans</button>
+          <button class="nav-item" data-view="reminders"><span class="nav-glyph" aria-hidden="true">◷</span>Reminder</button>
+        </nav>
+      </div>
+      <div class="side-note"><strong>Data tetap di perangkat ini</strong><span>Workbook dibaca di browser. Plan tersimpan di penyimpanan lokal perangkat.</span></div>
+    </aside>
+
+    <header class="mobile-header">
+      <div class="brand"><span class="brand-mark"><img src="assets/mytracker-logo.png" alt=""></span><span>MyTracker</span></div>
+      <time class="today-date" id="mobile-date"></time>
+    </header>
+
+    <main class="app-main">
+      <div class="topbar"><div class="breadcrumb">MyTracker <span aria-hidden="true">/</span> <strong id="breadcrumb-title">Dashboard</strong></div><div class="topbar-tools"><time class="today-date" id="desktop-date"></time><button class="button secondary theme-toggle" id="theme-toggle" type="button" aria-pressed="false" aria-label="Beralih tema warna" title="Ubah ke tema terang"><span class="theme-icon" aria-hidden="true">☼</span></button></div></div>
+
+      <section class="view" id="view-dashboard" aria-labelledby="dashboard-title">
+        <div class="page-head">
+          <div><p class="eyebrow">Mulai dengan rencana kecil agar terasa lebih ringan</p><h1 id="dashboard-title">Progres dimulai dari satu sesi.</h1><p class="subtitle">Simpan rencana, catat sesi, dan lihat perkembangannya dari satu tempat.</p></div>
+          <button class="button" data-action="add-plan">Add plan</button>
+        </div>
+        <div class="summary-grid" id="dashboard-summary"></div>
+        <div class="content-grid">
+          <section class="panel" aria-labelledby="dashboard-progress-title"><div class="panel-head"><div><h2 id="dashboard-progress-title">Aktivitas pekan ini</h2><div class="panel-subtitle">Ringkasan dari rencana yang dipilih</div></div><span class="status" id="dashboard-progress-status">Belum ada data</span></div><div id="dashboard-progress-body"></div></section>
+          <section class="panel" aria-labelledby="dashboard-plan-title"><div class="panel-head"><div><h2 id="dashboard-plan-title">Rencana aktif</h2><div class="panel-subtitle">Latihan atau sesi belajar</div></div></div><div id="dashboard-plan-body"></div></section>
+        </div>
+      </section>
+
+      <section class="view" id="view-sessions" aria-labelledby="sessions-title" hidden>
+        <div class="page-head"><div><p class="eyebrow">Catatan rencana</p><h1 id="sessions-title">Checklist session</h1><p class="subtitle">Tandai yang selesai dan tambahkan hasil aktual setelah sesi.</p></div></div>
+        <section class="panel"><div class="panel-head"><div><h2 id="session-list-title">Daftar sesi</h2><div class="panel-subtitle">Sesi tersimpan di plan yang dipilih</div></div><label class="field-label" for="session-plan-select">Plan</label></div><div class="field" style="max-width:420px;margin-top:10px"><select id="session-plan-select" aria-label="Pilih plan untuk ceklis sesi"></select></div><div class="inline-list" id="session-list"></div><div class="inline-actions" id="session-actions"></div>
+          <form class="manual-session-form" id="manual-session-form" hidden>
+            <div class="panel-head"><div><h2>Tambah sesi manual</h2><div class="panel-subtitle">Sesi baru masuk ke plan yang sedang dipilih.</div></div></div>
+            <div class="form-grid">
+              <div class="field"><label for="manual-title">Nama sesi atau topik</label><input id="manual-title" name="title" required maxlength="140"></div>
+              <div class="field"><label for="manual-week">Minggu</label><input id="manual-week" name="week" type="number" min="1" max="100" value="1"></div>
+              <div class="field"><label for="manual-day">Hari</label><select id="manual-day" name="day"><option value="">Pilih hari</option><option>Senin</option><option>Selasa</option><option>Rabu</option><option>Kamis</option><option>Jumat</option><option>Sabtu</option><option>Minggu</option></select></div>
+              <div class="field"><label for="manual-date">Tanggal (opsional)</label><input id="manual-date" name="date" type="date"></div>
+              <div class="field"><label for="manual-distance">Jarak rencana (km, opsional)</label><input id="manual-distance" name="plannedDistance" type="number" min="0" step="0.1"></div>
+              <div class="field"><label id="manual-duration-label" for="manual-duration">Durasi (opsional)</label><input id="manual-duration" name="duration" type="number" min="0" step="0.25"></div>
+              <div class="field" style="grid-column:1/-1"><label for="manual-details">Detail atau tujuan (opsional)</label><textarea id="manual-details" name="details" maxlength="1000"></textarea></div>
+            </div>
+            <div class="inline-actions"><button class="button" type="submit">Simpan sesi</button><button class="button ghost" type="button" data-action="cancel-session">Batal</button></div>
+          </form>
+        </section>
+      </section>
+
+      <section class="view" id="view-plans" aria-labelledby="plans-title" hidden>
+        <div class="page-head"><div><p class="eyebrow">Training plan</p><h1 id="plans-title">Plans</h1><p class="subtitle">Plan yang tersimpan di browser ini.</p></div><button class="button" data-action="add-plan">Add plan</button></div>
+        <div id="plan-feedback" aria-live="polite"></div><section class="panel"><div class="panel-head"><div><h2>Plan tersimpan</h2><div class="panel-subtitle">Disimpan lokal pada browser ini</div></div></div><div class="inline-list" id="plan-list"></div></section>
+      </section>
+
+      <section class="view" id="view-progress" aria-labelledby="progress-title" hidden>
+        <div class="page-head"><div><p class="eyebrow">Rencana dan realisasi</p><h1 id="progress-title">Progress</h1><p class="subtitle">Ringkasan dihitung dari sesi dan log, bukan diimpor sebagai sesi.</p></div></div>
+        <section class="panel"><div class="panel-head"><div><h2>Progres per minggu</h2><div class="panel-subtitle">Pilih plan untuk melihat rekapnya</div></div></div><div class="field" style="max-width:420px;margin-top:10px"><label for="progress-plan-select">Plan</label><select id="progress-plan-select"></select></div><div id="progress-body"></div></section>
+      </section>
+
+      <section class="view" id="view-import" aria-labelledby="import-title" hidden>
+        <div class="page-head"><div><p class="eyebrow">Pemetaan workbook</p><h1 id="import-title">Import Plans</h1><p class="subtitle">Format dikenali dari nama sheet dan kolom. Sheet sesi, progres, log, dan panduan punya tujuan masing-masing.</p></div></div>
+        <section class="panel" aria-labelledby="import-workbook-title">
+          <div class="panel-head"><div><h2 id="import-workbook-title">1. Pilih workbook</h2><div class="panel-subtitle">File dibaca di perangkat ini, tidak diunggah ke server.</div></div></div>
+          <div class="import-steps" aria-label="Tahap impor"><span class="import-step"><b>1</b> Workbook</span><span aria-hidden="true">›</span><span class="import-step"><b>2</b> Jenis plan</span><span aria-hidden="true">›</span><span class="import-step"><b>3</b> Pemetaan</span><span aria-hidden="true">›</span><span class="import-step"><b>4</b> Pratinjau</span></div>
+          <label class="upload-zone" for="workbook-file"><strong>Pilih file training plan (.xlsx)</strong><span>Sheet sesi akan dipetakan terpisah dari sheet pendukung.</span><input id="workbook-file" type="file" accept=".xlsx,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"></label>
+          <div id="import-feedback" aria-live="polite"></div>
+        </section>
+        <section class="panel section-gap" id="import-mapping-panel" hidden>
+          <div class="panel-head"><div><h2>2. Kenali jenis plan</h2><div class="panel-subtitle" id="import-detection-copy"></div></div><span class="status" id="import-file-badge"></span></div>
+          <div class="form-grid">
+            <div class="field"><label for="profile-select">Jenis plan</label><select id="profile-select"><option value="hm">HM Sub2 · 14 minggu</option><option value="analyst">Data Analyst · 7 minggu</option><option value="generic">Plan umum</option></select></div>
+            <div class="field"><label for="primary-sheet-select">Sheet utama</label><select id="primary-sheet-select"></select></div>
+          </div>
+          <div id="formula-warning"></div>
+          <div class="section-gap"><h2>3. Tujuan setiap sheet</h2><div class="panel-subtitle">Sheet pendukung tetap terpisah dari daftar sesi.</div><div id="routing-list" class="routing-list"></div></div>
+          <div class="section-gap"><h2>Pencocokan kolom sesi</h2><div class="panel-subtitle">Periksa pilihan otomatis atau ubah kolom sumber sebelum pratinjau.</div><div id="mapping-fields" class="mapping-list"></div></div>
+          <div class="section-gap"><div class="panel-head"><div><h2>4. Pratinjau sesi</h2><div class="panel-subtitle" id="preview-count"></div></div><span class="status" id="preview-status"></span></div><div id="preview-table" class="table-wrap"></div></div>
+          <div class="inline-actions"><button class="button" id="save-import-button" disabled>Simpan plan di perangkat ini</button><span class="quiet" id="save-helper" aria-live="polite"></span></div>
+        </section>
+      </section>
+
+      <section class="view" id="view-reminders" aria-labelledby="reminders-title" hidden>
+        <div class="page-head"><div><p class="eyebrow">Pengingat sesi</p><h1 id="reminders-title">Reminder</h1><p class="subtitle">Simpan jam pengingat pilihan di browser ini.</p></div></div>
+        <section class="panel"><div class="panel-head"><div><h2>Pengingat harian</h2><div class="panel-subtitle">Preferensi ini disimpan pada perangkat.</div></div></div><div class="form-grid"><div class="field"><label for="reminder-time">Jam pengingat</label><input id="reminder-time" type="time"></div><div class="field"><label for="reminder-enabled">Status</label><select id="reminder-enabled"><option value="off">Mati</option><option value="on">Aktif</option></select></div></div><div class="inline-actions"><button class="button" id="save-reminder">Simpan pengaturan</button><span id="reminder-feedback" class="quiet" aria-live="polite"></span></div><div class="notice info">Pengaturan tersimpan secara lokal. Notifikasi terjadwal belum dikirim pada versi ini.</div></section>
+      </section>
+    </main>
+  </div>
+
+  <nav class="bottom-nav" aria-label="Navigasi utama di smartphone">
+    <button data-view="dashboard" aria-current="page"><span class="nav-glyph" aria-hidden="true">⌂</span>Beranda</button>
+    <button data-view="sessions"><span class="nav-glyph" aria-hidden="true">☷</span>Sesi</button>
+    <button data-view="plans"><span class="nav-glyph" aria-hidden="true">▦</span>Plan</button>
+    <button data-view="import"><span class="nav-glyph" aria-hidden="true">⇧</span>Impor</button>
+    <button data-view="progress"><span class="nav-glyph" aria-hidden="true">⌁</span>Progres</button>
+    <button data-view="reminders"><span class="nav-glyph" aria-hidden="true">◷</span>Pengingat</button>
+  </nav>
+
+  <dialog class="plan-dialog" id="add-plan-dialog" aria-labelledby="add-plan-title">
+    <form class="dialog-form" id="add-plan-form">
+      <div><p class="eyebrow">Rencana baru</p><h2 id="add-plan-title">Add plan</h2></div>
+      <p>Buat plan kosong dan tambah sesi sendiri, atau impor workbook Excel dengan jalur pemetaan sesuai formatnya.</p>
+      <div class="field"><label for="new-plan-name">Nama plan</label><input id="new-plan-name" name="name" required maxlength="100" placeholder="Contoh: Latihan HM musim semi"></div>
+      <div class="field"><label for="new-plan-type">Jenis plan</label><select id="new-plan-type" name="profile"><option value="hm">Latihan lari</option><option value="analyst">Rencana belajar</option><option value="generic">Plan umum</option></select></div>
+      <div class="dialog-actions"><button class="button" type="submit">Buat plan kosong</button><button class="button secondary" type="button" data-action="import-from-dialog">Impor Excel</button><button class="button ghost" type="button" data-action="close-dialog">Batal</button></div>
+    </form>
+  </dialog>
+
+  <script>
+    (() => {
+      "use strict";
+      const STORAGE_KEY = "plan-tracker-v1";
+      const MAIN_NS = "http://schemas.openxmlformats.org/spreadsheetml/2006/main";
+      const REL_NS = "http://schemas.openxmlformats.org/officeDocument/2006/relationships";
+      const PACKAGE_REL_NS = "http://schemas.openxmlformats.org/package/2006/relationships";
+      const VIEW_LABELS = { dashboard: "Dashboard", sessions: "Checklist session", plans: "Plans", progress: "Progress", import: "Import Plans", reminders: "Reminder" };
+      const CONFIGS = {
+        hm: {
+          label: "HM Sub2 · 14 minggu", mainSheet: "Plan 14 Minggu", countLabel: "sesi latihan",
+          fields: [
+            { key: "week", label: "Minggu", aliases: ["Minggu"] },
+            { key: "phase", label: "Fase", aliases: ["Fase"] },
+            { key: "day", label: "Hari", aliases: ["Hari"] },
+            { key: "date", label: "Tanggal", aliases: ["Tanggal"] },
+            { key: "type", label: "Jenis sesi", aliases: ["Jenis sesi"] },
+            { key: "zone", label: "Zona utama", aliases: ["Zona utama"] },
+            { key: "details", label: "Detail sesi", aliases: ["Detail sesi"] },
+            { key: "plannedDistance", label: "Jarak rencana (km)", aliases: ["Jarak rencana (km)"] },
+            { key: "targetHr", label: "Target HR", aliases: ["Target HR (bpm)"] },
+            { key: "targetPace", label: "Target pace", aliases: ["Target pace (estimasi)"] },
+            { key: "purpose", label: "Tujuan sesi", aliases: ["Tujuan sesi"] },
+            { key: "actualDistance", label: "Km aktual", aliases: ["Km aktual"] },
+            { key: "actualHr", label: "HR aktual", aliases: ["HR rata-rata aktual"] },
+            { key: "actualPace", label: "Pace aktual", aliases: ["Pace aktual (mm:ss)"] },
+            { key: "completed", label: "Selesai?", aliases: ["Selesai?"] },
+            { key: "notes", label: "Catatan", aliases: ["Catatan"] }
+          ],
+          routes: {
+            "Ringkasan": ["Parameter dan target plan", "Tanggal mulai dan sasaran yang dipakai plan", "Supaya setelan rencana mudah dilihat tanpa menambah baris sesi."],
+            "Ringkasan Mingguan": ["Rekap progres mingguan", "Aplikasi menghitung ulang dari sesi dan realisasi", "Mencegah angka ringkasan lama atau hasil rumus yang basi dipakai sebagai data sesi."],
+            "Zona HR": ["Referensi zona HR", "Rentang detak jantung untuk tiap zona latihan", "Dipakai untuk memahami target HR yang muncul pada sesi lari."],
+            "Panduan Sesi": ["Panduan jenis sesi", "Arti dan cara menjalankan tiap jenis latihan", "Membantu membaca instruksi latihan tanpa mengubahnya menjadi sesi tambahan."],
+            "Titik Cek": ["Checkpoint plan", "Tes dan keputusan evaluasi yang sudah dirancang", "Menandai waktu untuk mengevaluasi plan, bukan jadwal latihan biasa."]
+          }
+        },
+        analyst: {
+          label: "Data Analyst · 7 minggu", mainSheet: "Training Plan", countLabel: "sesi belajar",
+          fields: [
+            { key: "week", label: "Minggu", aliases: ["Minggu"] },
+            { key: "day", label: "Hari", aliases: ["Hari"] },
+            { key: "type", label: "Jenis sesi", aliases: ["Jenis"] },
+            { key: "topic", label: "Topik", aliases: ["Topik"] },
+            { key: "duration", label: "Durasi (jam)", aliases: ["Durasi (jam)"] },
+            { key: "dataset", label: "Dataset", aliases: ["Dataset"] },
+            { key: "steps", label: "Langkah", aliases: ["Apa yang harus dilakukan (langkah)"] },
+            { key: "output", label: "Target output", aliases: ["Target output (bukti selesai)"] },
+            { key: "status", label: "Status", aliases: ["Status"] },
+            { key: "completedDate", label: "Tanggal selesai", aliases: ["Tanggal selesai"] },
+            { key: "notes", label: "Catatan pribadi", aliases: ["Catatan pribadi"] }
+          ],
+          routes: {
+            "Mulai Di Sini": ["Informasi workbook", "Petunjuk penggunaan workbook", "Menjelaskan cara mengisi file, bukan aktivitas belajar."],
+            "Log Harian": ["Log belajar", "Catatan kegiatan dan durasi aktual", "Mencatat pekerjaan yang sudah dilakukan tanpa menggandakannya sebagai sesi rencana."],
+            "Progres": ["Ringkasan progres", "Nilai progres workbook disimpan sebagai referensi", "Aplikasi menghitung ulang progres dari sesi agar angka rumus lama tidak ikut menggandakan data."],
+            "Panduan Mingguan": ["Panduan mingguan", "Tema, konsep, dan kriteria tiap minggu", "Menjadi bahan acuan saat mengerjakan sesi belajar."],
+            "Dataset": ["Referensi dataset", "Daftar sumber dataset untuk latihan", "Menghubungkan tugas belajar dengan sumber data tanpa membuat sesi baru."],
+            "Soal Tes 1": ["Asesmen", "Soal dan hasil evaluasi", "Tes disimpan sebagai evaluasi tersendiri, bukan sesi belajar harian."]
+          }
+        },
+        generic: {
+          label: "Plan umum", mainSheet: "", countLabel: "sesi",
+          fields: [
+            { key: "week", label: "Minggu", aliases: ["Minggu", "Week"] },
+            { key: "day", label: "Hari", aliases: ["Hari", "Day"] },
+            { key: "date", label: "Tanggal", aliases: ["Tanggal", "Date"] },
+            { key: "type", label: "Jenis sesi", aliases: ["Jenis sesi", "Jenis", "Type"] },
+            { key: "topic", label: "Topik atau nama sesi", aliases: ["Topik", "Nama sesi", "Activity"] },
+            { key: "details", label: "Detail", aliases: ["Detail", "Deskripsi", "Description"] },
+            { key: "plannedDistance", label: "Jarak rencana", aliases: ["Jarak rencana (km)", "Distance"] },
+            { key: "duration", label: "Durasi", aliases: ["Durasi", "Durasi (jam)", "Duration"] },
+            { key: "status", label: "Status", aliases: ["Status", "Selesai?"] },
+            { key: "notes", label: "Catatan", aliases: ["Catatan", "Notes"] }
+          ], routes: {}
+        }
+      };
+      const $ = (selector, root = document) => root.querySelector(selector);
+      const $$ = (selector, root = document) => [...root.querySelectorAll(selector)];
+      const escapeHtml = value => String(value ?? "").replace(/[&<>"']/g, char => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[char]);
+      const normalize = value => String(value ?? "").normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase().replace(/[^a-z0-9]+/g, "").trim();
+      const state = { plans: [], activePlanId: null, reminder: { time: "", enabled: false } };
+      let importWork = null;
+      let currentView = "dashboard";
+
+      function loadState() {
+        try {
+          const saved = JSON.parse(localStorage.getItem(STORAGE_KEY) || "null");
+          if (saved && Array.isArray(saved.plans)) {
+            state.plans = saved.plans;
+            state.activePlanId = saved.activePlanId || saved.plans[0]?.id || null;
+            state.reminder = saved.reminder || state.reminder;
+          }
+        } catch (error) { console.warn("Data lokal tidak dapat dibaca.", error); }
+      }
+      function persistState() {
+        try { localStorage.setItem(STORAGE_KEY, JSON.stringify({ plans: state.plans, activePlanId: state.activePlanId, reminder: state.reminder })); return true; }
+        catch (error) { console.error(error); return false; }
+      }
+      function activePlan() { return state.plans.find(plan => plan.id === state.activePlanId) || state.plans[0] || null; }
+      function formatDate(date = new Date()) { return new Intl.DateTimeFormat("id-ID", { weekday: "long", day: "numeric", month: "long" }).format(date); }
+      function applyTheme(theme, save = false) {
+        const light = theme === "light";
+        document.documentElement.dataset.theme = light ? "light" : "dark";
+        const toggle = $("#theme-toggle");
+        toggle.setAttribute("aria-pressed", String(light));
+        toggle.title = light ? "Ubah ke tema gelap" : "Ubah ke tema terang";
+        toggle.querySelector(".theme-icon").textContent = light ? "☾" : "☼";
+        document.querySelector('meta[name="theme-color"]').content = "#211f1f";
+        if (save) { try { localStorage.setItem("plan-tracker-theme", light ? "light" : "dark"); } catch (error) { console.warn("Preferensi tema tidak dapat disimpan.", error); } }
+      }
+      function setView(view) {
+        if (!VIEW_LABELS[view]) return;
+        currentView = view;
+        $$(".view").forEach(node => { node.hidden = node.id !== `view-${view}`; });
+        $$("[data-view]").forEach(button => {
+          if (button.tagName === "BUTTON") {
+            if (button.dataset.view === view) button.setAttribute("aria-current", "page"); else button.removeAttribute("aria-current");
+          }
+        });
+        $("#breadcrumb-title").textContent = VIEW_LABELS[view];
+        window.scrollTo({ top: 0, behavior: matchMedia("(prefers-reduced-motion: reduce)").matches ? "instant" : "smooth" });
+        renderAll();
+      }
+      function safeNumber(value) {
+        if (typeof value === "number") return value;
+        const num = Number(String(value ?? "").replace(",", ".").trim());
+        return Number.isFinite(num) ? num : null;
+      }
+      function excelDate(value) {
+        const n = safeNumber(value);
+        if (n === null || n < 1 || n > 100000) return value ?? "";
+        const date = new Date(Date.UTC(1899, 11, 30) + Math.round(n) * 86400000);
+        return date.toISOString().slice(0, 10);
+      }
+      function getPlanWeek(plan, session) { return Number(session.week) || 0; }
+      function sessionsFor(plan) { return Array.isArray(plan?.sessions) ? plan.sessions : []; }
+      function weekTotals(plan) {
+        const groups = new Map();
+        for (const session of sessionsFor(plan)) {
+          const week = getPlanWeek(plan, session) || 1;
+          const item = groups.get(week) || { week, total: 0, done: 0, plannedKm: 0, actualKm: 0, hours: 0 };
+          item.total++;
+          if (session.completed) item.done++;
+          item.plannedKm += safeNumber(session.plannedDistance) || 0;
+          item.actualKm += safeNumber(session.actualDistance) || (session.completed ? (safeNumber(session.plannedDistance) || 0) : 0);
+          item.hours += safeNumber(session.duration) || 0;
+          groups.set(week, item);
+        }
+        return [...groups.values()].sort((a,b) => a.week - b.week);
+      }
+      function completionStatus(session) {
+        if (session.completed) return "Selesai";
+        if (session.status && /selesai|complete|done|ya/i.test(String(session.status))) return "Selesai";
+        return "Belum selesai";
+      }
+      function nextSession(plan) { return sessionsFor(plan).find(s => !s.completed && !/selesai|complete|done|ya/i.test(String(s.status || ""))) || null; }
+      function renderAll() {
+        renderDashboard(); renderPlanList(); renderSessionView(); renderProgress(); renderReminder();
+      }
+      function renderDashboard() {
+        const plan = activePlan();
+        const sessions = sessionsFor(plan);
+        const done = sessions.filter(s => s.completed || /selesai|complete|done|ya/i.test(String(s.status || ""))).length;
+        const next = nextSession(plan);
+        const planType = plan ? (CONFIGS[plan.profile]?.label || "Plan umum") : "Belum ada plan";
+        const cards = [
+          ["Plan aktif", plan ? plan.name : "Belum ada plan", plan ? planType : "Impor workbook untuk mulai", "▦"],
+          ["Sesi selesai", plan ? `${done} dari ${sessions.length}` : "Belum ada catatan", plan ? "Status dari sesi plan" : "Akan dihitung dari data plan", "✓"],
+          ["Sesi berikutnya", next ? (next.topic || next.details || next.type || "Sesi latihan") : (plan ? "Semua sesi selesai" : "Menunggu plan pertama"), next ? [next.day, next.date ? excelDate(next.date) : ""].filter(Boolean).join(" · ") : "Rencana akan tampil setelah diimpor", "◷"]
+        ];
+        $("#dashboard-summary").innerHTML = cards.map(([label,value,foot,glyph]) => `<article class="card"><div class="card-head"><span class="card-label">${escapeHtml(label)}</span><span class="glyph-box" aria-hidden="true">${glyph}</span></div><div class="card-value">${escapeHtml(value)}</div><div class="card-foot">${escapeHtml(foot)}</div></article>`).join("");
+        const progressBody = $("#dashboard-progress-body");
+        if (!plan) {
+          $("#dashboard-progress-status").textContent = "Belum ada data";
+          progressBody.innerHTML = `<div class="empty-state"><span class="glyph-box" aria-hidden="true">⌁</span><strong>Progres akan muncul setelah ada plan</strong><p>Impor file Excel. Sheet sesi, progres, dan log akan diproses pada jalurnya masing-masing.</p><button class="button secondary" data-view="import">Pilih workbook</button></div>`;
+        } else {
+          const weeks = weekTotals(plan).slice(0,4);
+          $("#dashboard-progress-status").textContent = `${done} sesi selesai`;
+          progressBody.innerHTML = weeks.length ? `<div class="progress-weeks">${weeks.map(w => `<div class="week-row"><span class="week-label">Minggu ${w.week}</span><div class="week-track" role="progressbar" aria-label="Progres minggu ${w.week}" aria-valuemin="0" aria-valuemax="${w.total}" aria-valuenow="${w.done}"><div class="week-fill" style="width:${w.total ? Math.round(w.done / w.total * 100) : 0}%"></div></div><span class="week-count">${w.done}/${w.total}</span></div>`).join("")}</div>` : `<div class="empty-state"><strong>Belum ada sesi yang dapat diringkas</strong><p>Periksa sheet sesi dan pemetaan kolom.</p></div>`;
+        }
+        const planBody = $("#dashboard-plan-body");
+        if (!plan) planBody.innerHTML = `<div class="empty-state"><strong>Rencana akan tampil di sini</strong><p>Buat plan kosong dan tambah sesi sendiri, atau impor workbook.</p><button class="button secondary" data-action="add-plan">Add plan</button></div>`;
+        else planBody.innerHTML = `<div class="inline-list"><div class="list-row"><div class="list-row-main"><strong>${escapeHtml(plan.name)}</strong><span>${escapeHtml(planType)} · ${sessions.length} sesi</span></div><span class="status">Aktif</span></div><div class="support-list"><button class="button secondary" data-view="plans">Lihat detail plan</button></div></div>`;
+      }
+      function renderPlanList() {
+        const host = $("#plan-list");
+        if (!state.plans.length) { host.innerHTML = `<div class="empty-state"><strong>Belum ada plan tersimpan</strong><p>Buat plan kosong dan tambah sesi sendiri, atau impor workbook.</p><button class="button secondary" data-action="add-plan">Add plan</button></div>`; return; }
+        const hasLegacyPlan = state.plans.some(plan => !plan.importVersion);
+        host.innerHTML = `${hasLegacyPlan ? `<div class="notice">Plan lama masih menggunakan hasil pemetaan sebelumnya. Impor ulang workbook untuk memperbarui jumlah sesi.</div>` : ""}${state.plans.map(plan => {
+          const fileMeta = plan.fileName ? ` · ${escapeHtml(plan.fileName)}` : "";
+          return `<div class="plan-entry"><div class="list-row"><div class="list-row-main"><strong>${escapeHtml(plan.name)}</strong><span>${escapeHtml(CONFIGS[plan.profile]?.label || "Plan umum")} · ${sessionsFor(plan).length} sesi${fileMeta}</span></div><div class="plan-actions"><button class="button ${plan.id === state.activePlanId ? "" : "secondary"}" data-active-plan="${escapeHtml(plan.id)}">${plan.id === state.activePlanId ? "Plan aktif" : "Pilih plan"}</button><button class="button danger" data-remove-plan="${escapeHtml(plan.id)}" aria-label="Hapus ${escapeHtml(plan.name)}">Hapus</button></div></div></div>`;
+        }).join("")}`;
+      }
+      function renderSessionView() {
+        const select = $("#session-plan-select"); const old = select.value;
+        select.innerHTML = state.plans.length ? state.plans.map(p => `<option value="${escapeHtml(p.id)}">${escapeHtml(p.name)}</option>`).join("") : `<option value="">Belum ada plan</option>`;
+        select.value = state.plans.some(p => p.id === old) ? old : (state.activePlanId || "");
+        const plan = state.plans.find(p => p.id === select.value) || activePlan();
+        const host = $("#session-list");
+        const actions = $("#session-actions"); const manualForm = $("#manual-session-form");
+        if (!plan) { host.innerHTML = `<div class="empty-state"><strong>Belum ada plan untuk ditampilkan</strong><p>Buat plan kosong untuk menambah sesi manual, atau impor workbook.</p></div>`; actions.innerHTML = `<button class="button secondary" data-action="add-plan">Add plan</button>`; manualForm.hidden = true; return; }
+        actions.innerHTML = `<button class="button secondary" type="button" data-action="toggle-session-form">Tambah sesi manual</button>`;
+        $("#manual-duration-label").textContent = plan.profile === "analyst" ? "Durasi (jam, opsional)" : "Durasi (menit, opsional)";
+        host.innerHTML = sessionsFor(plan).map((s,index) => {
+          const title = s.topic || s.details || s.type || "Sesi";
+          const sub = [s.week ? `Minggu ${s.week}` : "",s.day || "",s.date ? excelDate(s.date) : "",s.plannedDistance ? `${s.plannedDistance} km` : "",s.duration ? `${s.duration} jam` : ""].filter(Boolean).join(" · ");
+          const isDone = !!s.completed || /selesai|complete|done|ya/i.test(String(s.status || ""));
+          return `<div class="list-row"><div class="completion-control"><input type="checkbox" id="done-${index}" data-session-index="${index}" ${isDone ? "checked" : ""}><label for="done-${index}"><strong>${escapeHtml(title)}</strong><span>${escapeHtml(sub)}${s.targetPace ? ` · Pace ${escapeHtml(s.targetPace)}` : ""}${s.targetHr ? ` · HR ${escapeHtml(s.targetHr)}` : ""}</span></label></div><span class="status ${isDone ? "" : "pending"}">${isDone ? "Selesai" : "Rencana"}</span></div>`;
+        }).join("") || `<div class="empty-state"><strong>Plan ini belum memiliki sesi</strong><p>Tambahkan sesi manual atau impor workbook ke plan ini.</p></div>`;
+      }
+      function renderProgress() {
+        const select = $("#progress-plan-select"); const old = select.value;
+        select.innerHTML = state.plans.length ? state.plans.map(p => `<option value="${escapeHtml(p.id)}">${escapeHtml(p.name)}</option>`).join("") : `<option value="">Belum ada plan</option>`;
+        select.value = state.plans.some(p => p.id === old) ? old : (state.activePlanId || "");
+        const plan = state.plans.find(p => p.id === select.value) || activePlan();
+        const body = $("#progress-body");
+        if (!plan) { body.innerHTML = `<div class="empty-state"><strong>Belum ada progres untuk ditampilkan</strong><p>Impor plan terlebih dahulu.</p></div>`; return; }
+        const weeks = weekTotals(plan);
+        body.innerHTML = weeks.length ? `<div class="progress-weeks">${weeks.map(w => `<div class="week-row"><span class="week-label">Minggu ${w.week}</span><div class="week-track" role="progressbar" aria-label="Sesi selesai pada minggu ${w.week}" aria-valuemin="0" aria-valuemax="${w.total}" aria-valuenow="${w.done}"><div class="week-fill" style="width:${w.total ? Math.round(w.done / w.total * 100) : 0}%"></div></div><span class="week-count">${w.done} dari ${w.total}</span></div>`).join("")}</div>` : `<div class="empty-state"><strong>Tidak ada sesi untuk dihitung</strong><p>Periksa pemetaan sheet utama.</p></div>`;
+      }
+      function renderReminder() {
+        $("#reminder-time").value = state.reminder.time || "";
+        $("#reminder-enabled").value = state.reminder.enabled ? "on" : "off";
+      }
+
+      function xmlDoc(text, name) {
+        const doc = new DOMParser().parseFromString(text, "application/xml");
+        if (doc.querySelector("parsererror")) throw new Error(`Struktur XML ${name} tidak valid.`);
+        return doc;
+      }
+      function normalizePackagePath(base, target) {
+        const source = target.startsWith("/") ? target.slice(1) : `${base}/${target}`;
+        const out = [];
+        for (const part of source.split("/")) { if (!part || part === ".") continue; if (part === "..") out.pop(); else out.push(part); }
+        return out.join("/");
+      }
+      async function inflateRaw(bytes) {
+        if (typeof DecompressionStream === "undefined") throw new Error("Browser ini belum menyediakan pembaca ZIP untuk file Excel. Buka aplikasi di Chrome atau Edge versi terbaru.");
+        try {
+          const stream = new Blob([bytes]).stream().pipeThrough(new DecompressionStream("deflate-raw"));
+          return new Uint8Array(await new Response(stream).arrayBuffer());
+        } catch (error) { throw new Error("Sheet Excel tidak dapat dibuka. Pastikan file .xlsx tidak rusak atau dilindungi sandi."); }
+      }
+      async function unzipXlsx(buffer) {
+        const bytes = new Uint8Array(buffer); const view = new DataView(buffer);
+        const min = Math.max(0, bytes.length - 65557); let eocd = -1;
+        for (let p = bytes.length - 22; p >= min; p--) { if (view.getUint32(p, true) === 0x06054b50) { eocd = p; break; } }
+        if (eocd < 0) throw new Error("File ini tidak memiliki struktur .xlsx yang dikenali.");
+        const entryCount = view.getUint16(eocd + 10, true); let cursor = view.getUint32(eocd + 16, true); const decoder = new TextDecoder(); const files = new Map();
+        for (let i = 0; i < entryCount; i++) {
+          if (view.getUint32(cursor, true) !== 0x02014b50) throw new Error("Daftar sheet Excel tidak dapat dibaca.");
+          const method = view.getUint16(cursor + 10, true); const size = view.getUint32(cursor + 20, true); const nameLength = view.getUint16(cursor + 28, true); const extraLength = view.getUint16(cursor + 30, true); const commentLength = view.getUint16(cursor + 32, true); const localOffset = view.getUint32(cursor + 42, true);
+          const name = decoder.decode(bytes.subarray(cursor + 46, cursor + 46 + nameLength)); const localNameLength = view.getUint16(localOffset + 26, true); const localExtraLength = view.getUint16(localOffset + 28, true); const dataStart = localOffset + 30 + localNameLength + localExtraLength; const packed = bytes.subarray(dataStart, dataStart + size);
+          let content;
+          if (method === 0) content = packed;
+          else if (method === 8) content = await inflateRaw(packed);
+          else { cursor += 46 + nameLength + extraLength + commentLength; continue; }
+          files.set(name, decoder.decode(content));
+          cursor += 46 + nameLength + extraLength + commentLength;
+        }
+        return files;
+      }
+      function columnIndex(reference) {
+        const letters = String(reference).match(/^[A-Z]+/i)?.[0]?.toUpperCase() || "A"; let n = 0;
+        for (const char of letters) n = n * 26 + char.charCodeAt(0) - 64;
+        return n - 1;
+      }
+      function parseWorksheet(text, name, sharedStrings) {
+        const doc = xmlDoc(text, `sheet ${name}`); const rowNodes = [...doc.getElementsByTagNameNS(MAIN_NS, "row")]; let formulaCount = 0; let uncachedFormulaCount = 0;
+        const rows = rowNodes.map(rowNode => {
+          const rowNumber = Number(rowNode.getAttribute("r")) || 0; const values = []; const formulas = [];
+          for (const cell of rowNode.getElementsByTagNameNS(MAIN_NS, "c")) {
+            const index = columnIndex(cell.getAttribute("r")); const type = cell.getAttribute("t"); const formula = cell.getElementsByTagNameNS(MAIN_NS, "f")[0]?.textContent ?? ""; const valueNode = cell.getElementsByTagNameNS(MAIN_NS, "v")[0]; let value = valueNode?.textContent ?? "";
+            if (formula) { formulaCount++; if (!value) uncachedFormulaCount++; }
+            if (type === "s" && value !== "") value = sharedStrings[Number(value)] ?? value;
+            else if (type === "inlineStr") value = [...cell.getElementsByTagNameNS(MAIN_NS, "t")].map(t => t.textContent || "").join("");
+            else if (type === "b") value = value === "1" ? "Ya" : "Tidak";
+            if (value !== "") values[index] = value;
+            if (formula) formulas[index] = formula;
+          }
+          return { rowNumber, values, formulas };
+        });
+        return { name, rows, formulaCount, uncachedFormulaCount };
+      }
+      function detectHeader(sheet, profile) {
+        const required = profile === "hm" ? ["minggu", "hari", "jenissesi"] : profile === "analyst" ? ["minggu", "hari", "jenis", "topik"] : ["minggu", "hari"];
+        let best = null; let bestScore = -1;
+        for (const row of sheet.rows.slice(0, 25)) {
+          const vals = row.values.map(v => normalize(v)); const score = required.reduce((sum, key) => sum + (vals.some(v => v === key || v.includes(key)) ? 1 : 0), 0);
+          if (score > bestScore) { best = row; bestScore = score; }
+        }
+        return bestScore >= Math.min(2, required.length) ? best : null;
+      }
+      function detectProfile(sheets) {
+        const names = sheets.map(s => normalize(s.name));
+        if (names.some(n => n.includes("plan14minggu")) && names.some(n => n.includes("zonahr"))) return "hm";
+        if (names.some(n => n === "trainingplan") && names.some(n => n.includes("logharian")) && names.some(n => n.includes("panduanmingguan"))) return "analyst";
+        return "generic";
+      }
+      function findSheet(sheets, wanted) { const target = normalize(wanted); return sheets.find(s => normalize(s.name) === target) || sheets.find(s => normalize(s.name).includes(target)) || null; }
+      function readSharedStrings(files) {
+        const text = files.get("xl/sharedStrings.xml"); if (!text) return [];
+        const doc = xmlDoc(text, "shared strings");
+        return [...doc.getElementsByTagNameNS(MAIN_NS, "si")].map(si => [...si.getElementsByTagNameNS(MAIN_NS, "t")].map(t => t.textContent || "").join(""));
+      }
+      async function parseWorkbook(file) {
+        if (!file.name.toLowerCase().endsWith(".xlsx")) throw new Error("Pilih workbook .xlsx. Format .xls belum didukung.");
+        if (file.size > 20 * 1024 * 1024) throw new Error("Ukuran file melebihi batas 20 MB untuk versi lokal ini.");
+        const files = await unzipXlsx(await file.arrayBuffer());
+        const sharedStrings = readSharedStrings(files);
+        const workbookText = files.get("xl/workbook.xml"); const relText = files.get("xl/_rels/workbook.xml.rels");
+        if (!workbookText || !relText) throw new Error("Workbook tidak berisi daftar sheet yang bisa dibaca.");
+        const workbook = xmlDoc(workbookText, "workbook"); const relDoc = xmlDoc(relText, "workbook relationships");
+        const relationships = new Map([...relDoc.getElementsByTagNameNS(PACKAGE_REL_NS, "Relationship")].map(rel => [rel.getAttribute("Id"), rel.getAttribute("Target")]));
+        const sheets = [];
+        for (const sheetNode of workbook.getElementsByTagNameNS(MAIN_NS, "sheet")) {
+          const name = sheetNode.getAttribute("name"); const rid = sheetNode.getAttributeNS(REL_NS, "id"); const target = relationships.get(rid);
+          if (!target) continue;
+          const path = normalizePackagePath("xl", target); const sheetText = files.get(path);
+          if (sheetText) sheets.push(parseWorksheet(sheetText, name, sharedStrings));
+        }
+        if (!sheets.length) throw new Error("Workbook tidak memiliki sheet yang bisa dibaca.");
+        importWork = { fileName: file.name, sheets, sharedStrings, detectedProfile: detectProfile(sheets), profile: detectProfile(sheets), primarySheet: "", mapping: {}, parsedAt: new Date().toISOString() };
+        return importWork;
+      }
+      function headersFor(sheet, profile) {
+        if (!sheet) return { row: null, headers: [] };
+        const row = detectHeader(sheet, profile);
+        if (!row) return { row: null, headers: [] };
+        const headers = row.values.map((value,index) => value ? { index, label: String(value) } : null).filter(Boolean);
+        return { row, headers };
+      }
+      function matchHeader(headers, aliases) {
+        const normalized = aliases.map(normalize);
+        return headers.find(h => normalized.some(a => normalize(h.label) === a)) || headers.find(h => normalized.some(a => normalize(h.label).includes(a))) || null;
+      }
+      function routeFor(profile, sheetName) {
+        const config = CONFIGS[profile]; const route = Object.entries(config.routes).find(([name]) => normalize(name) === normalize(sheetName));
+        if (route) return route[1];
+        if (config.mainSheet && normalize(sheetName) === normalize(config.mainSheet)) return [profile === "analyst" ? "Jadwal sesi belajar" : profile === "hm" ? "Jadwal sesi lari" : "Daftar sesi", "Data inti yang masuk ke ceklis dan progres", "Menjadi sumber baris sesi yang ditampilkan di Ceklis sesi."];
+        return ["Sheet belum dipetakan", "Periksa isi sheet sebelum menyimpannya sebagai referensi", "Dibiarkan terpisah agar kontennya tidak keliru dianggap sebagai sesi."];
+      }
+      function renderImportMapping() {
+        if (!importWork) return;
+        const config = CONFIGS[importWork.profile];
+        const profileSelect = $("#profile-select"); profileSelect.value = importWork.profile;
+        const primarySelect = $("#primary-sheet-select");
+        primarySelect.innerHTML = importWork.sheets.map(s => `<option value="${escapeHtml(s.name)}">${escapeHtml(s.name)}</option>`).join("");
+        if (!importWork.primarySheet || !importWork.sheets.some(s => s.name === importWork.primarySheet)) {
+          importWork.primarySheet = findSheet(importWork.sheets, config.mainSheet)?.name || importWork.sheets[0].name;
+        }
+        primarySelect.value = importWork.primarySheet;
+        const selectedSheet = importWork.sheets.find(s => s.name === importWork.primarySheet);
+        const { row: headerRow, headers } = headersFor(selectedSheet, importWork.profile);
+        const expected = config.fields;
+        if (!importWork.mapping || importWork.mapping._sheet !== importWork.primarySheet || importWork.mapping._profile !== importWork.profile) {
+          importWork.mapping = { _sheet: importWork.primarySheet, _profile: importWork.profile };
+          for (const field of expected) importWork.mapping[field.key] = matchHeader(headers, field.aliases)?.index ?? -1;
+        }
+        $("#import-detection-copy").textContent = importWork.detectedProfile === "generic" ? "Struktur belum cocok dengan dua format yang dikenal. Pilih jenis plan dan sheet utama." : `Terdeteksi dari nama sheet. Pastikan pilihan kolom di bawah sudah benar.`;
+        $("#import-file-badge").textContent = `${importWork.sheets.length} sheet`;
+        $("#routing-list").innerHTML = importWork.sheets.map(sheet => {
+          const [role, detail, why] = routeFor(importWork.profile, sheet.name);
+          const rowCount = sheet.rows.filter(row => row.values.some(v => v !== "" && v !== undefined)).length;
+          return `<div class="routing-row"><span class="routing-sheet">${escapeHtml(sheet.name)}</span><span><span class="routing-role">${escapeHtml(role)}</span><span class="routing-detail">${escapeHtml(detail)} · ${rowCount} baris berisi data</span><span class="routing-why"><strong>Kenapa:</strong> ${escapeHtml(why)}</span></span></div>`;
+        }).join("");
+        const mapHost = $("#mapping-fields");
+        if (!headerRow || !headers.length) {
+          mapHost.innerHTML = `<div class="notice"><strong>Header sesi belum dikenali.</strong> Pilih sheet utama lain atau periksa susunan header workbook.</div>`;
+        } else {
+          mapHost.innerHTML = expected.map(field => `<div class="mapping-row"><label for="map-${field.key}">${escapeHtml(field.label)}</label><select id="map-${field.key}" data-map-key="${field.key}"><option value="-1">Jangan petakan</option>${headers.map(h => `<option value="${h.index}" ${Number(importWork.mapping[field.key]) === h.index ? "selected" : ""}>${escapeHtml(h.label)}</option>`).join("")}</select></div>`).join("");
+        }
+        const formulaCount = selectedSheet?.formulaCount || 0; const uncached = selectedSheet?.uncachedFormulaCount || 0;
+        $("#formula-warning").innerHTML = formulaCount ? `<div class="notice"><strong>${formulaCount} sel formula ditemukan pada sheet sesi.</strong> Pratinjau memakai nilai terakhir yang tersimpan di file${uncached ? `; ${uncached} formula tidak memiliki nilai tersimpan` : ""}. Jika tanggal atau target memakai rumus yang baru berubah, hitung ulang dan simpan workbook di Excel sebelum mengimpor.</div>` : "";
+        renderImportPreview();
+      }
+      function selectedMappingRows() {
+        const sheet = importWork?.sheets.find(s => s.name === importWork.primarySheet); if (!sheet) return { headers: [], sessions: [], headerRow: null };
+        const { row: headerRow, headers } = headersFor(sheet, importWork.profile);
+        if (!headerRow) return { headers, sessions: [], headerRow };
+        const config = CONFIGS[importWork.profile]; const carry = {};
+        const mapped = sheet.rows.filter(r => r.rowNumber > headerRow.rowNumber && r.values.some(v => v !== "" && v !== undefined)).map((row,index) => {
+          const item = { sourceRow: row.rowNumber, source: row };
+          for (const field of config.fields) {
+            const col = Number(importWork.mapping[field.key]);
+            let value = Number.isInteger(col) && col >= 0 ? row.values[col] ?? "" : "";
+            if ((field.key === "date" || field.key === "completedDate") && value !== "") value = excelDate(value);
+            item[field.key] = value;
+          }
+          for (const key of ["week", "phase"]) {
+            if (item[key] !== "" && item[key] !== undefined && item[key] !== null) carry[key] = item[key];
+            else if (carry[key] !== undefined) item[key] = carry[key];
+          }
+          item.topic = item.topic || item.details || item.type || "";
+          item.completed = /^(ya|yes|true|selesai|done|complete)$/i.test(String(item.completed || item.status || ""));
+          return item;
+        }).filter(item => {
+          const fields = config.fields.map(f => item[f.key]);
+          if (!fields.some(v => v !== "" && v !== undefined)) return false;
+          return [item.topic, item.details, item.type].some(value => String(value ?? "").trim() !== "");
+        });
+        return { headers, sessions: mapped, headerRow };
+      }
+      function renderImportPreview() {
+        if (!importWork) return;
+        const { sessions, headerRow } = selectedMappingRows();
+        const config = CONFIGS[importWork.profile];
+        $("#preview-count").textContent = `${sessions.length} ${config.countLabel} terdeteksi${headerRow ? ` dari baris header ${headerRow.rowNumber}` : ""}.`;
+        $("#preview-status").textContent = sessions.length ? "Siap ditinjau" : "Belum siap";
+        const previewFields = config.fields.filter(f => Number(importWork.mapping[f.key]) >= 0).slice(0,5);
+        $("#preview-table").innerHTML = sessions.length && previewFields.length ? `<table><thead><tr>${previewFields.map(f => `<th>${escapeHtml(f.label)}</th>`).join("")}</tr></thead><tbody>${sessions.slice(0,6).map(session => `<tr>${previewFields.map(f => `<td>${escapeHtml(session[f.key])}</td>`).join("")}</tr>`).join("")}</tbody></table>` : `<div class="table-empty">Pilih sheet utama dan petakan setidaknya satu kolom sesi untuk melihat pratinjau.</div>`;
+        $("#save-import-button").disabled = sessions.length === 0 || !headerRow;
+        $("#save-helper").textContent = sessions.length ? "Data akan disimpan lokal dan sheet pendukung tetap dipisahkan." : "Belum ada sesi yang bisa disimpan.";
+      }
+      function routeSupportSheets() {
+        const profile = importWork.profile; const config = CONFIGS[profile];
+        return importWork.sheets.filter(s => s.name !== importWork.primarySheet).map(sheet => {
+          const [role, detail, why] = routeFor(profile, sheet.name); const meaningfulRows = sheet.rows.filter(row => row.values.some(v => v !== "" && v !== undefined));
+          return { name: sheet.name, role, detail, why, rowCount: meaningfulRows.length, rows: meaningfulRows.map(r => r.values.map(v => v ?? "")), hasFormulas: sheet.formulaCount > 0 };
+        });
+      }
+      function extractAnalystLogs() {
+        const sheet = findSheet(importWork.sheets, "Log Harian"); if (!sheet) return [];
+        const header = sheet.rows.slice(0,25).find(row => {
+          const values = row.values.map(normalize);
+          return ["tanggal","minggu","durasi(jam)","yangdikerjakan"].every(key => values.some(value => value === key || value.includes(key)));
+        });
+        if (!header) return [];
+        const headers = header.values.map(v => normalize(v));
+        const index = key => headers.findIndex(h => h === normalize(key) || h.includes(normalize(key)));
+        return sheet.rows.filter(r => r.rowNumber > header.rowNumber && r.values.some(v => v !== "" && v !== undefined)).map(row => {
+          const values = row.values.map(v => String(v ?? ""));
+          const week = values[index("minggu")] ?? "";
+          const example = values.some(v => /\bcontoh\b/i.test(v)) || week === "0";
+          return { sourceRow: row.rowNumber, week, date: values[index("tanggal")] ?? "", activity: values[index("sesi") ] ?? "", duration: values[index("durasi (jam)")] ?? "", work: values[index("yang dikerjakan")] ?? "", obstacle: values[index("hambatan")] ?? "", comprehension: values[index("tingkat paham")] ?? "", next: values[index("rencana berikutnya")] ?? "", example };
+        }).filter(log => !log.example && Object.values(log).some(v => v !== "" && v !== false && v !== undefined));
+      }
+      function saveImportedPlan() {
+        const { sessions } = selectedMappingRows(); if (!importWork || !sessions.length) return;
+        const config = CONFIGS[importWork.profile];
+        const plan = {
+          id: `plan-${Date.now()}-${Math.random().toString(36).slice(2,7)}`,
+          name: importWork.fileName.replace(/\.xlsx$/i, ""), profile: importWork.profile,
+          fileName: importWork.fileName, importedAt: new Date().toISOString(), importVersion: 2,
+          sessions: sessions.map(s => ({ week:s.week, phase:s.phase, day:s.day, date:s.date, type:s.type, zone:s.zone, details:s.details, topic:s.topic, duration:s.duration, dataset:s.dataset, steps:s.steps, output:s.output, plannedDistance:s.plannedDistance, targetHr:s.targetHr, targetPace:s.targetPace, purpose:s.purpose, actualDistance:s.actualDistance, actualHr:s.actualHr, actualPace:s.actualPace, status:s.status, completed:!!s.completed, completedDate:s.completedDate, notes:s.notes })),
+          supportSheets: routeSupportSheets(),
+          logs: importWork.profile === "analyst" ? extractAnalystLogs() : [],
+          sourceFormulaCount: importWork.sheets.find(s => s.name === importWork.primarySheet)?.formulaCount || 0
+        };
+        const existing = state.plans.findIndex(p => p.fileName === plan.fileName);
+        if (existing >= 0) state.plans[existing] = plan; else state.plans.push(plan);
+        state.activePlanId = plan.id;
+        if (!persistState()) { $("#import-feedback").innerHTML = `<div class="notice"><strong>Penyimpanan lokal penuh.</strong> Plan belum disimpan. Hapus data situs lama dari pengaturan browser, lalu coba lagi.</div>`; return; }
+        $("#import-feedback").innerHTML = `<div class="notice info"><strong>Plan tersimpan.</strong> ${escapeHtml(sessions.length)} sesi disimpan. Sheet pendukung dan log tetap berada di bagian terpisah.</div>`;
+        $("#workbook-file").value = "";
+        importWork = null;
+        $("#import-mapping-panel").hidden = true;
+        $("#routing-list").replaceChildren();
+        $("#mapping-fields").replaceChildren();
+        $("#preview-table").replaceChildren();
+        $("#formula-warning").replaceChildren();
+        $("#save-helper").textContent = "";
+        $("#save-import-button").disabled = true;
+        renderAll();
+      }
+
+      function openAddPlanDialog() {
+        $("#add-plan-form").reset();
+        $("#plan-feedback").textContent = "";
+        $("#add-plan-dialog").showModal();
+      }
+      function createManualPlan(event) {
+        event.preventDefault();
+        const form = event.currentTarget;
+        if (!form.reportValidity()) return;
+        const name = $("#new-plan-name").value.trim();
+        const profile = $("#new-plan-type").value;
+        if (!name) return;
+        const plan = { id: `plan-${Date.now()}-${Math.random().toString(36).slice(2,7)}`, name, profile, fileName: "", importedAt: new Date().toISOString(), importVersion: 2, manual: true, sessions: [], supportSheets: [], logs: [] };
+        const previous = state.activePlanId;
+        state.plans.push(plan); state.activePlanId = plan.id;
+        if (!persistState()) { state.plans.pop(); state.activePlanId = previous; $("#plan-feedback").textContent = "Plan belum bisa disimpan di perangkat ini."; return; }
+        $("#add-plan-dialog").close();
+        setView("plans");
+        $("#plan-feedback").innerHTML = `<div class="notice info"><strong>Plan dibuat.</strong> Tambahkan sesi dari menu Ceklis sesi atau impor workbook.</div>`;
+      }
+      function removePlan(planId) {
+        const index = state.plans.findIndex(plan => plan.id === planId);
+        if (index < 0) return;
+        const plan = state.plans[index];
+        if (!confirm(`Hapus plan “${plan.name}”? Sesi dan catatan yang tersimpan di dalam plan ini juga akan dihapus dari perangkat ini.`)) return;
+        const previousActiveId = state.activePlanId;
+        state.plans.splice(index, 1);
+        if (previousActiveId === planId) state.activePlanId = state.plans[0]?.id || null;
+        if (!persistState()) {
+          state.plans.splice(index, 0, plan);
+          state.activePlanId = previousActiveId;
+          alert("Plan belum dapat dihapus karena perubahan tidak bisa disimpan di perangkat ini.");
+          return;
+        }
+        renderAll();
+      }
+      function addManualSession(event) {
+        event.preventDefault();
+        const plan = state.plans.find(p => p.id === $("#session-plan-select").value) || activePlan();
+        if (!plan) return;
+        const data = new FormData(event.currentTarget);
+        const title = String(data.get("title") || "").trim();
+        if (!title) { $("#manual-title").focus(); return; }
+        const detail = String(data.get("details") || "").trim();
+        const session = {
+          week: String(data.get("week") || "1"), day: String(data.get("day") || ""), date: String(data.get("date") || ""),
+          type: plan.profile === "analyst" ? "Belajar" : "Manual", topic: plan.profile === "analyst" ? title : "", details: plan.profile === "analyst" ? detail : title,
+          steps: plan.profile === "analyst" ? detail : "", plannedDistance: String(data.get("plannedDistance") || ""),
+          duration: String(data.get("duration") || ""), status: "Belum", completed: false, notes: "", manual: true
+        };
+        plan.sessions.push(session); state.activePlanId = plan.id;
+        if (!persistState()) { plan.sessions.pop(); alert("Sesi belum bisa disimpan di perangkat ini."); return; }
+        event.currentTarget.reset(); $("#manual-week").value = "1"; event.currentTarget.hidden = true;
+        renderAll();
+      }
+
+      $("#add-plan-form").addEventListener("submit", createManualPlan);
+      $("#manual-session-form").addEventListener("submit", addManualSession);
+      $("#session-plan-select").addEventListener("change", event => { state.activePlanId = event.target.value; persistState(); renderDashboard(); renderSessionView(); renderProgress(); });
+      $("#progress-plan-select").addEventListener("change", event => { state.activePlanId = event.target.value; persistState(); renderDashboard(); renderProgress(); });
+      document.addEventListener("change", event => {
+        const check = event.target.closest("[data-session-index]");
+        if (check) {
+          const plan = state.plans.find(p => p.id === $("#session-plan-select").value) || activePlan();
+          const session = sessionsFor(plan)[Number(check.dataset.sessionIndex)];
+          if (session) { session.completed = check.checked; if (!persistState()) alert("Perubahan belum bisa disimpan di perangkat ini."); renderAll(); }
+        }
+      });
+      $("#workbook-file").addEventListener("change", async event => {
+        const file = event.target.files?.[0]; if (!file) return;
+        importWork = null; $("#import-mapping-panel").hidden = true;
+        $("#import-feedback").innerHTML = `<div class="notice info">Membaca daftar sheet dan kolom di perangkat ini…</div>`;
+        try {
+          await parseWorkbook(file);
+          $("#import-feedback").innerHTML = "";
+          $("#import-mapping-panel").hidden = false;
+          renderImportMapping();
+        } catch (error) { $("#import-feedback").innerHTML = `<div class="notice"><strong>Workbook belum bisa dibaca.</strong> ${escapeHtml(error.message || "Periksa file dan coba lagi.")}</div>`; }
+      });
+      $("#profile-select").addEventListener("change", event => { if (!importWork) return; importWork.profile = event.target.value; importWork.primarySheet = findSheet(importWork.sheets, CONFIGS[importWork.profile].mainSheet)?.name || ""; importWork.mapping = {}; renderImportMapping(); });
+      $("#primary-sheet-select").addEventListener("change", event => { if (!importWork) return; importWork.primarySheet = event.target.value; importWork.mapping = {}; renderImportMapping(); });
+      $("#mapping-fields").addEventListener("change", event => {
+        const select = event.target.closest("[data-map-key]"); if (!select || !importWork) return;
+        importWork.mapping[select.dataset.mapKey] = Number(select.value); renderImportPreview();
+      });
+      $("#save-import-button").addEventListener("click", saveImportedPlan);
+      $("#save-reminder").addEventListener("click", () => {
+        state.reminder = { time: $("#reminder-time").value, enabled: $("#reminder-enabled").value === "on" };
+        const ok = persistState(); $("#reminder-feedback").textContent = ok ? "Preferensi disimpan di perangkat ini." : "Tidak dapat menyimpan preferensi lokal.";
+      });
+      document.addEventListener("click", event => {
+        const viewButton = event.target.closest("[data-view]");
+        if (viewButton) { setView(viewButton.dataset.view); return; }
+        const action = event.target.closest("[data-action]");
+        if (action) {
+          if (action.dataset.action === "add-plan") openAddPlanDialog();
+          else if (action.dataset.action === "import-from-dialog") { $("#add-plan-dialog").close(); setView("import"); $("#workbook-file").focus(); }
+          else if (action.dataset.action === "close-dialog") $("#add-plan-dialog").close();
+          else if (action.dataset.action === "toggle-session-form") { const form = $("#manual-session-form"); form.hidden = !form.hidden; if (!form.hidden) $("#manual-title").focus(); }
+          else if (action.dataset.action === "cancel-session") { const form = $("#manual-session-form"); form.reset(); $("#manual-week").value = "1"; form.hidden = true; }
+          return;
+        }
+        const selectPlan = event.target.closest("[data-active-plan]");
+        if (selectPlan) { state.activePlanId = selectPlan.dataset.activePlan; persistState(); renderAll(); }
+        const removePlanButton = event.target.closest("[data-remove-plan]");
+        if (removePlanButton) removePlan(removePlanButton.dataset.removePlan);
+      });
+
+      $("#theme-toggle").addEventListener("click", () => applyTheme(document.documentElement.dataset.theme === "dark" ? "light" : "dark", true));
+      applyTheme(document.documentElement.dataset.theme || "dark");
+      const formatted = formatDate(); $("#desktop-date").textContent = formatted; $("#mobile-date").textContent = formatted;
+      loadState(); renderAll();
+    })();
+  </script>
+</body>
+</html>
