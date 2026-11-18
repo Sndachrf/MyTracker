@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="id">
+<html lang="en">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
@@ -15,28 +15,28 @@
     @font-face { font-family: "MyTracker Inter"; src: url("assets/Inter-Italic.otf") format("opentype"); font-style: italic; font-weight: 400; font-display: swap; }
     :root {
       color-scheme: dark;
-      --bg: #0d1424;
-      --side: #101a2d;
-      --surface: #151f33;
-      --raised: #1b2940;
-      --line: #293850;
+      --bg: #0a0f12;
+      --side: #0d1518;
+      --surface: #121c20;
+      --raised: #192629;
+      --line: #293a3d;
       --text: #eef3fb;
       --muted: #a4b2c8;
-      --soft: #93a2b8;
-      --accent: #f08b69;
-      --accent-soft: #402d35;
-      --teal: #7bc9bb;
+      --soft: #91a4aa;
+      --accent: #dc143c;
+      --accent-soft: #40202a;
+      --teal: #dc143c;
       --pattern: #26334a;
-      --hover: #1a2740;
-      --selected: #202d45;
-      --glyph-bg: rgba(123,201,187,.1);
-      --status-bg: #21343e;
+      --hover: #19272a;
+      --selected: #1c2d30;
+      --glyph-bg: rgba(220,20,60,.12);
+      --status-bg: #38212b;
       --pending-bg: #342e2b;
-      --track: #26344a;
-      --button-secondary: #23334b;
-      --border-strong: #35445c;
-      --notice-bg: rgba(64,45,53,.48);
-      --notice-text: #ead4cc;
+      --track: #26373a;
+      --button-secondary: #203034;
+      --border-strong: #3a5052;
+      --notice-bg: rgba(64,32,42,.5);
+      --notice-text: #f0d7dd;
     }
     :root[data-theme="light"] {
       color-scheme: light;
@@ -48,14 +48,14 @@
       --text: #17212b;
       --muted: #465565;
       --soft: #526273;
-      --accent: #b74326;
-      --accent-soft: #f8dfd7;
-      --teal: #126e62;
+      --accent: #b51031;
+      --accent-soft: #f8dfe5;
+      --teal: #b51031;
       --pattern: #dce2e8;
       --hover: #dce3e9;
       --selected: #d6e0e8;
-      --glyph-bg: #e4f1ee;
-      --status-bg: #d9eee8;
+      --glyph-bg: #f8e5e9;
+      --status-bg: #f4dce2;
       --pending-bg: #f7e8d8;
       --track: #d6dde5;
       --button-secondary: #e5eaf0;
@@ -88,7 +88,7 @@
     :root[data-theme="light"] .import-step { background: var(--raised); }
     :root[data-theme="light"] .notice { border-color: var(--accent); background: var(--notice-bg); color: var(--notice-text); }
     :root[data-theme="light"] .notice.info { border-color: var(--teal); background: #e5f0ee; color: var(--muted); }
-    :root[data-theme="light"] .status { background: var(--status-bg); color: #125d51; }
+    :root[data-theme="light"] .status { background: var(--status-bg); color: #8b1530; }
     :root[data-theme="light"] .status.pending { background: var(--pending-bg); color: #74420c; }
     :root[data-theme="light"] .week-track { background: var(--track); }
     :root[data-theme="light"] .week-fill,
@@ -101,7 +101,8 @@
     :root[data-theme="light"] .topbar { border-bottom-color: var(--line); }
     :root[data-theme="light"] .button:focus-visible { outline-color: var(--teal); }
     .theme-toggle { width: 44px; min-height: 44px; padding: 0; border-color: var(--line); background: var(--surface); color: var(--text); }
-    .theme-toggle .theme-icon { font-size: 18px; line-height: 1; }
+    .theme-toggle .theme-icon { display: grid; place-items: center; }
+    .theme-toggle .icon { width: 21px; height: 21px; }
     :root {
       font-family: "MyTracker Inter", Arial, sans-serif;
       color: var(--text);
@@ -114,8 +115,8 @@
     body {
       min-width: 320px; min-height: 100vh; margin: 0; color: var(--text);
       background-color: var(--bg);
-      background-image: radial-gradient(var(--pattern) .8px, transparent .8px);
-      background-size: 20px 20px;
+      background-image: radial-gradient(ellipse at 82% 2%, rgba(220,20,60,.06), transparent 32%);
+      background-size: auto;
       font-size: 14px; line-height: 1.5;
     }
     button, input, select { font: inherit; }
@@ -127,7 +128,7 @@
     .app-shell { min-height: 100vh; display: grid; grid-template-columns: 232px minmax(0,1fr); }
     .sidebar {
       position: sticky; top: 0; height: 100vh; display: flex; flex-direction: column; gap: 28px;
-      padding: 23px 16px; border-right: 1px solid var(--line); background: rgba(16,26,45,.97);
+      padding: 23px 16px; border-right: 1px solid var(--line); background: rgba(13,21,24,.97);
     }
     .brand { display: flex; align-items: center; gap: 11px; padding: 0 10px; font-size: 15px; font-weight: 600; letter-spacing: -.02em; }
     .brand-mark { position: relative; width: 44px; height: 44px; display: flex; flex: 0 0 auto; align-items: center; justify-content: center; overflow: hidden; border-radius: 9px; background: transparent; }
@@ -138,15 +139,16 @@
       min-height: 40px; display: flex; align-items: center; gap: 11px; padding: 0 11px;
       border: 0; border-radius: 9px; background: transparent; color: var(--muted); text-align: left; cursor: pointer;
     }
-    .nav-item:hover { background: #1a2740; color: var(--text); }
-    .nav-item[aria-current="page"] { color: var(--text); background: #202d45; box-shadow: inset 2px 0 var(--accent); }
-    .nav-glyph { width: 20px; color: var(--soft); text-align: center; font-size: 15px; }
+    .nav-item:hover { background: var(--hover); color: var(--text); }
+    .nav-item[aria-current="page"] { color: var(--text); background: var(--selected); box-shadow: inset 2px 0 var(--accent); }
+    .nav-glyph { width: 22px; display: grid; place-items: center; color: var(--soft); }
+    .icon { width: 19px; height: 19px; display: block; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
     .nav-item[aria-current="page"] .nav-glyph { color: var(--accent); }
     .side-note { margin-top: auto; padding: 14px 13px; border: 1px solid var(--line); border-radius: 12px; background: var(--surface); color: var(--muted); }
     .side-note strong { display: block; margin-bottom: 5px; color: var(--text); font-size: 12px; font-weight: 500; }
     .side-note span { display: block; font-size: 11px; }
     .app-main { min-width: 0; padding: 0 34px 44px; }
-    .topbar { height: 70px; display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 28px; border-bottom: 1px solid rgba(41,56,80,.75); }
+    .topbar { height: 70px; display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 24px; border-bottom: 1px solid var(--line); }
     .breadcrumb { color: var(--muted); font-size: 12px; }
     .breadcrumb strong { color: var(--text); font-weight: 500; }
     .today-date { color: var(--muted); font-size: 12px; }
@@ -158,22 +160,53 @@
     h2 { margin: 0; font-size: 14px; font-weight: 500; letter-spacing: -.01em; }
     h3 { margin: 0; font-size: 12px; font-weight: 500; }
     .subtitle { margin: 9px 0 0; color: var(--muted); font-size: 13px; }
-    .button { min-height: 40px; display: inline-flex; align-items: center; justify-content: center; gap: 8px; padding: 0 14px; border: 1px solid transparent; border-radius: 9px; background: var(--accent); color: #211a1d; font-size: 12px; font-weight: 600; text-decoration: none; cursor: pointer; }
+    .dashboard-hero { position: relative; display: flex; align-items: center; justify-content: space-between; gap: 24px; min-height: 150px; margin-bottom: 14px; padding: 22px 24px; overflow: hidden; border: 1px solid rgba(220,20,60,.32); border-radius: 15px; background: radial-gradient(ellipse at 95% 50%,rgba(220,20,60,.18),transparent 32%), linear-gradient(110deg,rgba(220,20,60,.12),transparent 58%), var(--surface); box-shadow: 0 14px 42px rgba(220,20,60,.06); }
+    .dashboard-hero-copy, .dashboard-hero-action { position: relative; z-index: 1; }
+    .dashboard-hero .eyebrow { margin-bottom: 7px; }
+    .dashboard-hero h1 { font-size: clamp(25px,2.7vw,32px); }
+    .dashboard-hero .subtitle { max-width: 580px; }
+    .dashboard-hero-action { display: flex; flex: 0 0 auto; align-items: center; gap: 15px; }
+    .hero-plan-state { display: flex; align-items: center; gap: 8px; color: var(--muted); font-size: 11px; white-space: nowrap; }
+    .hero-plan-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--accent); box-shadow: 0 0 12px rgba(220,20,60,.65); }
+    .dashboard-hero .button { min-height: 42px; padding: 0 18px; box-shadow: 0 0 20px rgba(220,20,60,.16); }
+    .summary-grid .card { min-height: 126px; padding: 15px 16px; background: linear-gradient(145deg,rgba(255,255,255,.018),transparent 58%),var(--surface); transition: border-color .18s ease, transform .18s ease; }
+    .summary-grid .card:hover { transform: translateY(-2px); border-color: rgba(220,20,60,.38); }
+    .dashboard-panel { min-height: 275px; }
+    .dashboard-panel .panel-head { align-items: flex-start; }
+    .dashboard-session-list { display: grid; gap: 8px; margin-top: 16px; }
+    .dashboard-session-row { display: flex; align-items: center; gap: 11px; min-width: 0; padding: 10px 11px; border: 1px solid rgba(41,58,61,.62); border-radius: 10px; background: var(--raised); }
+    .dashboard-session-icon { width: 31px; height: 31px; display: grid; flex: 0 0 auto; place-items: center; border-radius: 9px; background: var(--glyph-bg); color: var(--accent); font-size: 15px; }
+    .dashboard-session-copy { min-width: 0; flex: 1; }
+    .dashboard-session-copy strong { display: block; overflow: hidden; color: var(--text); font-size: 11px; font-weight: 500; text-overflow: ellipsis; white-space: nowrap; }
+    .dashboard-session-copy span { display: block; margin-top: 3px; color: var(--muted); font-size: 10px; }
+    .dashboard-session-day { flex: 0 0 auto; color: var(--soft); font-size: 10px; text-align: right; }
+    .dashboard-empty { min-height: 190px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 5px; margin-top: 15px; padding: 18px; border: 1px dashed var(--border-strong); border-radius: 11px; background: radial-gradient(ellipse at 50% 0%,rgba(220,20,60,.07),transparent 65%); text-align: center; }
+    .dashboard-empty .glyph-box { margin-bottom: 3px; }
+    .dashboard-empty strong { font-size: 12px; font-weight: 500; }
+    .dashboard-empty p { max-width: 330px; margin: 0; color: var(--muted); font-size: 11px; }
+    .dashboard-empty-actions { display: flex; flex-wrap: wrap; justify-content: center; gap: 8px; margin-top: 7px; }
+    .dashboard-week-list { display: grid; gap: 14px; margin-top: 20px; }
+    .dashboard-week-row { display: grid; grid-template-columns: 76px minmax(0,1fr) auto; align-items: center; gap: 11px; }
+    .dashboard-week-label, .dashboard-week-count { color: var(--muted); font-size: 10px; white-space: nowrap; }
+    .dashboard-week-count { color: var(--soft); }
+    .dashboard-panel-footer { margin-top: 16px; padding-top: 12px; border-top: 1px solid var(--line); }
+    .dashboard-panel-footer .button { width: 100%; min-height: 38px; }
+    .button { min-height: 40px; display: inline-flex; align-items: center; justify-content: center; gap: 8px; padding: 0 14px; border: 1px solid transparent; border-radius: 9px; background: var(--accent); color: #fff; font-size: 12px; font-weight: 600; text-decoration: none; cursor: pointer; }
     .button:hover { filter: brightness(1.08); }
-    .button.secondary { border-color: #34455e; background: #23334b; color: var(--text); }
+    .button.secondary { border-color: var(--line); background: var(--button-secondary); color: var(--text); }
     .button.ghost { border-color: var(--line); background: transparent; color: var(--muted); }
     .button:disabled { cursor: not-allowed; opacity: .48; }
     .view[hidden] { display: none !important; }
-    .summary-grid { display: grid; grid-template-columns: repeat(3,minmax(0,1fr)); gap: 13px; }
-    .card, .panel { min-width: 0; padding: 17px; border: 1px solid var(--line); border-radius: 13px; background: rgba(21,31,51,.97); }
+    .summary-grid { display: grid; grid-template-columns: repeat(4,minmax(0,1fr)); gap: 13px; }
+    .card, .panel { min-width: 0; padding: 17px; border: 1px solid var(--line); border-radius: 14px; background: var(--surface); }
     .card-head, .panel-head { display: flex; align-items: center; justify-content: space-between; gap: 9px; }
     .card-label, .panel-subtitle { color: var(--muted); font-size: 11px; }
-    .card-value { margin-top: 15px; font-size: 15px; font-weight: 500; }
+    .card-value { margin-top: 13px; font-size: 15px; font-weight: 500; overflow-wrap: anywhere; }
     .card-foot { margin-top: 4px; color: var(--soft); font-size: 10px; }
-    .glyph-box { width: 34px; height: 34px; display: grid; flex: 0 0 auto; place-items: center; border-radius: 9px; color: var(--teal); background: rgba(123,201,187,.1); font-size: 16px; }
-    .content-grid { display: grid; grid-template-columns: minmax(0,1.5fr) minmax(240px,.9fr); gap: 13px; margin-top: 14px; }
+    .glyph-box { width: 38px; height: 38px; display: grid; flex: 0 0 auto; place-items: center; border-radius: 11px; color: var(--teal); background: var(--glyph-bg); font-size: 18px; }
+    .content-grid { display: grid; grid-template-columns: minmax(0,1.12fr) minmax(300px,.88fr); gap: 14px; margin-top: 14px; }
     .panel-subtitle { margin-top: 4px; }
-    .empty-state { min-height: 176px; display: flex; flex-direction: column; align-items: center; justify-content: center; margin-top: 16px; padding: 18px; border: 1px dashed #35445c; border-radius: 10px; background: radial-gradient(circle at 50% 0%,rgba(123,201,187,.06),transparent 60%); text-align: center; }
+    .empty-state { min-height: 176px; display: flex; flex-direction: column; align-items: center; justify-content: center; margin-top: 16px; padding: 18px; border: 1px dashed #35445c; border-radius: 10px; background: radial-gradient(circle at 50% 0%,rgba(220,20,60,.07),transparent 60%); text-align: center; }
     .empty-state strong { margin-top: 10px; font-size: 12px; font-weight: 500; }
     .empty-state p { max-width: 320px; margin: 4px 0 11px; color: var(--muted); font-size: 11px; }
     .quiet { color: var(--muted); }
@@ -181,24 +214,24 @@
     .view-stack { display: grid; gap: 13px; }
     .section-gap { margin-top: 14px; }
     .inline-list { display: grid; gap: 8px; margin-top: 15px; }
-    .list-row { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 12px; border-radius: 9px; background: #19263b; }
+    .list-row { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 12px; border-radius: 9px; background: var(--raised); }
     .list-row-main { min-width: 0; }
     .list-row-main strong { display: block; font-size: 12px; font-weight: 500; overflow-wrap: anywhere; }
     .list-row-main span { display: block; margin-top: 3px; color: var(--muted); font-size: 10px; overflow-wrap: anywhere; }
     .plan-actions { display: flex; flex: 0 0 auto; align-items: center; gap: 7px; }
     .button.danger { border-color: #67404a; background: #382632; color: #ffb0a1; }
-    .status { flex: 0 0 auto; padding: 5px 8px; border-radius: 99px; background: #21343e; color: var(--teal); font-size: 10px; }
+    .status { flex: 0 0 auto; padding: 5px 8px; border-radius: 99px; background: var(--status-bg); color: var(--teal); font-size: 10px; }
     .status.pending { background: #342e2b; color: #e6b6a2; }
     .form-grid { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 12px; margin-top: 15px; }
     .field { display: grid; gap: 6px; min-width: 0; }
     .field label, .field-label { color: var(--muted); font-size: 11px; }
-    .field select, .field input:not([type="checkbox"]):not([type="file"]), .field textarea { width: 100%; min-height: 40px; padding: 8px 10px; border: 1px solid #35445c; border-radius: 8px; background: #101a2d; color: var(--text); }
+    .field select, .field input:not([type="checkbox"]):not([type="file"]), .field textarea { width: 100%; min-height: 40px; padding: 8px 10px; border: 1px solid var(--line); border-radius: 8px; background: var(--side); color: var(--text); }
     .field textarea { min-height: 82px; resize: vertical; }
     .field select:focus-visible, .field input:focus-visible { outline: 2px solid var(--teal); outline-offset: 2px; }
     .import-steps { display: flex; flex-wrap: wrap; align-items: center; gap: 7px; margin: 17px 0; color: var(--soft); font-size: 10px; }
     .import-step { padding: 6px 9px; border: 1px solid var(--line); border-radius: 7px; background: #121d30; }
     .import-step b { margin-right: 4px; color: var(--accent); font-weight: 500; }
-    .upload-zone { display: grid; justify-items: center; gap: 6px; padding: 24px 14px; border: 1px dashed #50627e; border-radius: 11px; background: rgba(18,29,48,.8); text-align: center; cursor: pointer; }
+    .upload-zone { display: grid; justify-items: center; gap: 6px; padding: 24px 14px; border: 1px dashed var(--border-strong); border-radius: 11px; background: var(--side); text-align: center; cursor: pointer; }
     .upload-zone:hover { border-color: var(--teal); background: #15243a; }
     .upload-zone strong { font-size: 12px; font-weight: 500; }
     .upload-zone span { color: var(--muted); font-size: 10px; }
@@ -233,7 +266,7 @@
     .progress-weeks { display: grid; gap: 12px; margin-top: 15px; }
     .week-row { display: grid; grid-template-columns: 104px minmax(0,1fr) auto; align-items: center; gap: 12px; }
     .week-label { color: var(--muted); font-size: 10px; }
-    .week-track { height: 8px; overflow: hidden; border-radius: 99px; background: #26344a; }
+    .week-track { height: 8px; overflow: hidden; border-radius: 99px; background: var(--track); }
     .week-fill { height: 100%; border-radius: inherit; background: var(--teal); }
     .week-count { color: var(--soft); font-size: 10px; white-space: nowrap; }
     .support-list { display: grid; gap: 8px; margin-top: 13px; }
@@ -246,7 +279,7 @@
     .plan-details summary { width: fit-content; min-height: 36px; display: flex; align-items: center; color: var(--teal); font-size: 11px; cursor: pointer; }
     .plan-details summary:hover { color: var(--text); }
     .plan-details .support-list { padding: 0 0 8px; }
-    dialog.plan-dialog { width: min(440px,calc(100% - 24px)); padding: 0; border: 1px solid #35445c; border-radius: 14px; background: #121d30; color: var(--text); }
+    dialog.plan-dialog { width: min(440px,calc(100% - 24px)); padding: 0; border: 1px solid var(--line); border-radius: 14px; background: var(--surface); color: var(--text); }
     dialog.plan-dialog::backdrop { background: rgba(4,8,16,.72); backdrop-filter: blur(3px); }
     .dialog-form { display: grid; gap: 14px; padding: 21px; }
     .dialog-form p { margin: -7px 0 0; color: var(--muted); font-size: 11px; }
@@ -257,7 +290,7 @@
     @media (max-width: 760px) {
       .app-shell { display: block; min-height: 100vh; }
       .sidebar { display: none; }
-      .mobile-header { position: sticky; z-index: 5; top: 0; min-height: 58px; display: flex; align-items: center; justify-content: space-between; gap: 10px; padding: 10px 16px; border-bottom: 1px solid var(--line); background: rgba(16,26,45,.97); }
+    .mobile-header { position: sticky; z-index: 5; top: 0; min-height: 58px; display: flex; align-items: center; justify-content: space-between; gap: 10px; padding: 10px 16px; border-bottom: 1px solid var(--line); background: rgba(13,21,24,.97); }
       .mobile-header .brand { padding: 0; font-size: 13px; }
       .mobile-header .brand-mark { width: 42px; height: 42px; }
       .mobile-header .brand-mark img { width: 92px; height: 92px; }
@@ -266,21 +299,28 @@
       .topbar { height: 45px; margin-bottom: 20px; }
       .content-grid { grid-template-columns: 1fr; }
       .summary-grid { grid-template-columns: repeat(2,minmax(0,1fr)); }
-      .summary-grid .card:last-child { grid-column: 1 / -1; }
+      .dashboard-hero { align-items: flex-start; flex-direction: column; gap: 15px; padding: 19px; }
+      .dashboard-hero-action { width: 100%; justify-content: space-between; gap: 10px; }
+      .dashboard-hero .button { min-height: 40px; }
       .page-head { align-items: flex-start; flex-direction: column; gap: 14px; }
       .page-head .button { width: auto; min-height: 36px; align-self: flex-start; padding: 0 12px; }
       .topbar .today-date { display: none; }
       .topbar-tools { margin-left: auto; }
       .theme-toggle { width: 40px; min-height: 40px; }
-      .bottom-nav { position: sticky; z-index: 6; bottom: 0; display: grid; grid-template-columns: repeat(6,minmax(0,1fr)); padding: 8px 7px max(8px,env(safe-area-inset-bottom)); border-top: 1px solid var(--line); background: rgba(16,26,45,.98); }
+      .bottom-nav { position: sticky; z-index: 6; bottom: 0; display: grid; grid-template-columns: repeat(6,minmax(0,1fr)); padding: 8px 7px max(8px,env(safe-area-inset-bottom)); border-top: 1px solid var(--line); background: rgba(13,21,24,.98); }
       .bottom-nav button { min-width: 0; min-height: 56px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4px; padding: 5px 2px; border: 0; border-radius: 9px; background: transparent; color: var(--soft); font-size: 10px; cursor: pointer; }
-      .bottom-nav button:hover, .bottom-nav button[aria-current="page"] { background: #202d45; color: var(--text); }
-      .bottom-nav .nav-glyph { width: auto; font-size: 18px; }
+      .bottom-nav button:hover, .bottom-nav button[aria-current="page"] { background: var(--selected); color: var(--text); }
+      .bottom-nav .nav-glyph { width: auto; }
+      .bottom-nav .icon { width: 22px; height: 22px; }
     }
     @media (max-width: 520px) {
       .app-main { padding-right: 13px; padding-left: 13px; }
       .summary-grid { gap: 9px; }
       .card, .panel { padding: 14px; }
+      .summary-grid .card { min-height: 116px; padding: 12px; }
+      .dashboard-hero-action { align-items: flex-start; flex-direction: column; }
+      .dashboard-hero-action .button { width: 100%; }
+      .dashboard-week-row { grid-template-columns: 65px minmax(0,1fr) auto; gap: 8px; }
       .content-grid { gap: 10px; }
       .form-grid { grid-template-columns: 1fr; }
       .routing-row, .mapping-row { grid-template-columns: 1fr; gap: 4px; }
@@ -297,25 +337,25 @@
 </head>
 <body>
   <div class="app-shell">
-    <aside class="sidebar" aria-label="Navigasi MyTracker">
+    <aside class="sidebar" aria-label="MyTracker navigation">
       <div class="brand"><span class="brand-mark"><img src="assets/mytracker-logo.png" alt=""></span><span>MyTracker</span></div>
       <div>
         <p class="nav-group-title">Personal Plan</p>
-        <nav class="nav-list" aria-label="Menu utama">
-          <button class="nav-item" data-view="dashboard" aria-current="page"><span class="nav-glyph" aria-hidden="true">⌂</span>Dashboard</button>
-          <button class="nav-item" data-view="sessions"><span class="nav-glyph" aria-hidden="true">☷</span>Checklist session</button>
-          <button class="nav-item" data-view="plans"><span class="nav-glyph" aria-hidden="true">▦</span>Plans</button>
-          <button class="nav-item" data-view="progress"><span class="nav-glyph" aria-hidden="true">⌁</span>Progress</button>
+        <nav class="nav-list" aria-label="Main menu">
+          <button class="nav-item" data-view="dashboard" aria-current="page"><span class="nav-glyph" aria-hidden="true"><svg class="icon" viewBox="0 0 24 24"><path d="m3 10 9-7 9 7v10a1 1 0 0 1-1 1h-5v-7H9v7H4a1 1 0 0 1-1-1z"/></svg></span>Dashboard</button>
+          <button class="nav-item" data-view="sessions"><span class="nav-glyph" aria-hidden="true"><svg class="icon" viewBox="0 0 24 24"><path d="M8 6h13M8 12h13M8 18h13"/><circle cx="3" cy="6" r=".7"/><circle cx="3" cy="12" r=".7"/><circle cx="3" cy="18" r=".7"/></svg></span>Sessions</button>
+          <button class="nav-item" data-view="plans"><span class="nav-glyph" aria-hidden="true"><svg class="icon" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="17" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg></span>Plans</button>
+          <button class="nav-item" data-view="progress"><span class="nav-glyph" aria-hidden="true"><svg class="icon" viewBox="0 0 24 24"><path d="M3 20V4M3 20h18M7 15l4-5 4 3 6-8"/></svg></span>Progress</button>
         </nav>
       </div>
       <div>
         <p class="nav-group-title">Settings</p>
-        <nav class="nav-list" aria-label="Menu pengaturan">
-          <button class="nav-item" data-view="import"><span class="nav-glyph" aria-hidden="true">⇧</span>Import Plans</button>
-          <button class="nav-item" data-view="reminders"><span class="nav-glyph" aria-hidden="true">◷</span>Reminder</button>
+        <nav class="nav-list" aria-label="Settings menu">
+          <button class="nav-item" data-view="import"><span class="nav-glyph" aria-hidden="true"><svg class="icon" viewBox="0 0 24 24"><path d="M12 16V3m0 0L7 8m5-5 5 5M4 15v5h16v-5"/></svg></span>Import plans</button>
+          <button class="nav-item" data-view="reminders"><span class="nav-glyph" aria-hidden="true"><svg class="icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg></span>Reminder</button>
         </nav>
       </div>
-      <div class="side-note"><strong>Data tetap di perangkat ini</strong><span>Workbook dibaca di browser. Plan tersimpan di penyimpanan lokal perangkat.</span></div>
+      <div class="side-note"><strong>Your data stays on this device</strong><span>Workbooks are read in your browser. Plans are saved in this device's local storage.</span></div>
     </aside>
 
     <header class="mobile-header">
@@ -324,94 +364,94 @@
     </header>
 
     <main class="app-main">
-      <div class="topbar"><div class="breadcrumb">MyTracker <span aria-hidden="true">/</span> <strong id="breadcrumb-title">Dashboard</strong></div><div class="topbar-tools"><time class="today-date" id="desktop-date"></time><button class="button secondary theme-toggle" id="theme-toggle" type="button" aria-pressed="false" aria-label="Beralih tema warna" title="Ubah ke tema terang"><span class="theme-icon" aria-hidden="true">☼</span></button></div></div>
+      <div class="topbar"><div class="breadcrumb">MyTracker <span aria-hidden="true">/</span> <strong id="breadcrumb-title">Dashboard</strong></div><div class="topbar-tools"><time class="today-date" id="desktop-date"></time><button class="button secondary theme-toggle" id="theme-toggle" type="button" aria-pressed="false" aria-label="Toggle color theme" title="Switch to light theme"><span class="theme-icon" aria-hidden="true"></span></button></div></div>
 
       <section class="view" id="view-dashboard" aria-labelledby="dashboard-title">
-        <div class="page-head">
-          <div><p class="eyebrow">Mulai dengan rencana kecil agar terasa lebih ringan</p><h1 id="dashboard-title">Progres dimulai dari satu sesi.</h1><p class="subtitle">Simpan rencana, catat sesi, dan lihat perkembangannya dari satu tempat.</p></div>
-          <button class="button" data-action="add-plan">Add plan</button>
-        </div>
+        <section class="dashboard-hero" aria-labelledby="dashboard-title">
+          <div class="dashboard-hero-copy"><p class="eyebrow" id="dashboard-greeting">MYTRACKER · TRAINING DASHBOARD</p><h1 id="dashboard-title">Good morning</h1><p class="subtitle" id="dashboard-hero-subtitle">Your plan, sessions, and weekly progress at a glance.</p></div>
+          <div class="dashboard-hero-action"><span class="hero-plan-state"><span class="hero-plan-dot" aria-hidden="true"></span><span id="dashboard-plan-state">No active plan</span></span><button class="button" id="dashboard-primary-action" data-action="add-plan">Add plan</button></div>
+        </section>
         <div class="summary-grid" id="dashboard-summary"></div>
         <div class="content-grid">
-          <section class="panel" aria-labelledby="dashboard-progress-title"><div class="panel-head"><div><h2 id="dashboard-progress-title">Aktivitas pekan ini</h2><div class="panel-subtitle">Ringkasan dari rencana yang dipilih</div></div><span class="status" id="dashboard-progress-status">Belum ada data</span></div><div id="dashboard-progress-body"></div></section>
-          <section class="panel" aria-labelledby="dashboard-plan-title"><div class="panel-head"><div><h2 id="dashboard-plan-title">Rencana aktif</h2><div class="panel-subtitle">Latihan atau sesi belajar</div></div></div><div id="dashboard-plan-body"></div></section>
+          <section class="panel dashboard-panel" aria-labelledby="dashboard-sessions-title"><div class="panel-head"><div><h2 id="dashboard-sessions-title">Today's sessions</h2><div class="panel-subtitle">Upcoming sessions from your active plan</div></div><span class="status" id="dashboard-sessions-status">No plan yet</span></div><div id="dashboard-sessions-body"></div></section>
+          <section class="panel dashboard-panel" aria-labelledby="dashboard-progress-title"><div class="panel-head"><div><h2 id="dashboard-progress-title">Weekly plan</h2><div class="panel-subtitle">Your progress by training week</div></div><span class="glyph-box"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 12h4l3-8 4 16 3-8h4"/></svg></span></div><div id="dashboard-progress-body"></div><div class="dashboard-panel-footer"><button class="button secondary" data-view="progress">View full progress</button></div></section>
         </div>
       </section>
 
       <section class="view" id="view-sessions" aria-labelledby="sessions-title" hidden>
-        <div class="page-head"><div><p class="eyebrow">Catatan rencana</p><h1 id="sessions-title">Checklist session</h1><p class="subtitle">Tandai yang selesai dan tambahkan hasil aktual setelah sesi.</p></div></div>
-        <section class="panel"><div class="panel-head"><div><h2 id="session-list-title">Daftar sesi</h2><div class="panel-subtitle">Sesi tersimpan di plan yang dipilih</div></div><label class="field-label" for="session-plan-select">Plan</label></div><div class="field" style="max-width:420px;margin-top:10px"><select id="session-plan-select" aria-label="Pilih plan untuk ceklis sesi"></select></div><div class="inline-list" id="session-list"></div><div class="inline-actions" id="session-actions"></div>
+        <div class="page-head"><div><p class="eyebrow">Plan log</p><h1 id="sessions-title">Session checklist</h1><p class="subtitle">Mark completed sessions and add your actual results.</p></div></div>
+        <section class="panel"><div class="panel-head"><div><h2 id="session-list-title">Sessions</h2><div class="panel-subtitle">Sessions saved in the selected plan</div></div><label class="field-label" for="session-plan-select">Plan</label></div><div class="field" style="max-width:420px;margin-top:10px"><select id="session-plan-select" aria-label="Select a plan for the session checklist"></select></div><div class="inline-list" id="session-list"></div><div class="inline-actions" id="session-actions"></div>
           <form class="manual-session-form" id="manual-session-form" hidden>
-            <div class="panel-head"><div><h2>Tambah sesi manual</h2><div class="panel-subtitle">Sesi baru masuk ke plan yang sedang dipilih.</div></div></div>
+            <div class="panel-head"><div><h2>Add a session manually</h2><div class="panel-subtitle">The new session will be added to the selected plan.</div></div></div>
             <div class="form-grid">
-              <div class="field"><label for="manual-title">Nama sesi atau topik</label><input id="manual-title" name="title" required maxlength="140"></div>
-              <div class="field"><label for="manual-week">Minggu</label><input id="manual-week" name="week" type="number" min="1" max="100" value="1"></div>
-              <div class="field"><label for="manual-day">Hari</label><select id="manual-day" name="day"><option value="">Pilih hari</option><option>Senin</option><option>Selasa</option><option>Rabu</option><option>Kamis</option><option>Jumat</option><option>Sabtu</option><option>Minggu</option></select></div>
-              <div class="field"><label for="manual-date">Tanggal (opsional)</label><input id="manual-date" name="date" type="date"></div>
-              <div class="field"><label for="manual-distance">Jarak rencana (km, opsional)</label><input id="manual-distance" name="plannedDistance" type="number" min="0" step="0.1"></div>
-              <div class="field"><label id="manual-duration-label" for="manual-duration">Durasi (opsional)</label><input id="manual-duration" name="duration" type="number" min="0" step="0.25"></div>
-              <div class="field" style="grid-column:1/-1"><label for="manual-details">Detail atau tujuan (opsional)</label><textarea id="manual-details" name="details" maxlength="1000"></textarea></div>
+              <div class="field"><label for="manual-title">Session name or topic</label><input id="manual-title" name="title" required maxlength="140"></div>
+              <div class="field"><label for="manual-week">Week</label><input id="manual-week" name="week" type="number" min="1" max="100" value="1"></div>
+              <div class="field"><label for="manual-day">Day</label><select id="manual-day" name="day"><option value="">Select a day</option><option>Monday</option><option>Tuesday</option><option>Wednesday</option><option>Thursday</option><option>Friday</option><option>Saturday</option><option>Sunday</option></select></div>
+              <div class="field"><label for="manual-date">Date (optional)</label><input id="manual-date" name="date" type="date"></div>
+              <div class="field"><label for="manual-distance">Planned distance (km, optional)</label><input id="manual-distance" name="plannedDistance" type="number" min="0" step="0.1"></div>
+              <div class="field"><label id="manual-duration-label" for="manual-duration">Duration (optional)</label><input id="manual-duration" name="duration" type="number" min="0" step="0.25"></div>
+              <div class="field" style="grid-column:1/-1"><label for="manual-details">Details or purpose (optional)</label><textarea id="manual-details" name="details" maxlength="1000"></textarea></div>
             </div>
-            <div class="inline-actions"><button class="button" type="submit">Simpan sesi</button><button class="button ghost" type="button" data-action="cancel-session">Batal</button></div>
+            <div class="inline-actions"><button class="button" type="submit">Save session</button><button class="button ghost" type="button" data-action="cancel-session">Cancel</button></div>
           </form>
         </section>
       </section>
 
       <section class="view" id="view-plans" aria-labelledby="plans-title" hidden>
-        <div class="page-head"><div><p class="eyebrow">Training plan</p><h1 id="plans-title">Plans</h1><p class="subtitle">Plan yang tersimpan di browser ini.</p></div><button class="button" data-action="add-plan">Add plan</button></div>
-        <div id="plan-feedback" aria-live="polite"></div><section class="panel"><div class="panel-head"><div><h2>Plan tersimpan</h2><div class="panel-subtitle">Disimpan lokal pada browser ini</div></div></div><div class="inline-list" id="plan-list"></div></section>
+        <div class="page-head"><div><p class="eyebrow">Training plans</p><h1 id="plans-title">Plans</h1><p class="subtitle">Plans saved in this browser.</p></div><button class="button" data-action="add-plan">Add plan</button></div>
+        <div id="plan-feedback" aria-live="polite"></div><section class="panel"><div class="panel-head"><div><h2>Saved plans</h2><div class="panel-subtitle">Stored locally in this browser</div></div></div><div class="inline-list" id="plan-list"></div></section>
       </section>
 
       <section class="view" id="view-progress" aria-labelledby="progress-title" hidden>
-        <div class="page-head"><div><p class="eyebrow">Rencana dan realisasi</p><h1 id="progress-title">Progress</h1><p class="subtitle">Ringkasan dihitung dari sesi dan log, bukan diimpor sebagai sesi.</p></div></div>
-        <section class="panel"><div class="panel-head"><div><h2>Progres per minggu</h2><div class="panel-subtitle">Pilih plan untuk melihat rekapnya</div></div></div><div class="field" style="max-width:420px;margin-top:10px"><label for="progress-plan-select">Plan</label><select id="progress-plan-select"></select></div><div id="progress-body"></div></section>
+        <div class="page-head"><div><p class="eyebrow">Plan and completion</p><h1 id="progress-title">Progress</h1><p class="subtitle">Summaries are calculated from sessions and logs, which are not imported as sessions.</p></div></div>
+        <section class="panel"><div class="panel-head"><div><h2>Weekly progress</h2><div class="panel-subtitle">Select a plan to view its summary</div></div></div><div class="field" style="max-width:420px;margin-top:10px"><label for="progress-plan-select">Plan</label><select id="progress-plan-select"></select></div><div id="progress-body"></div></section>
       </section>
 
       <section class="view" id="view-import" aria-labelledby="import-title" hidden>
-        <div class="page-head"><div><p class="eyebrow">Pemetaan workbook</p><h1 id="import-title">Import Plans</h1><p class="subtitle">Format dikenali dari nama sheet dan kolom. Sheet sesi, progres, log, dan panduan punya tujuan masing-masing.</p></div></div>
+        <div class="page-head"><div><p class="eyebrow">Workbook mapping</p><h1 id="import-title">Import plans</h1><p class="subtitle">Formats are recognized from sheet names and columns. Session, progress, log, and guide sheets each have a separate purpose.</p></div></div>
         <section class="panel" aria-labelledby="import-workbook-title">
-          <div class="panel-head"><div><h2 id="import-workbook-title">1. Pilih workbook</h2><div class="panel-subtitle">File dibaca di perangkat ini, tidak diunggah ke server.</div></div></div>
-          <div class="import-steps" aria-label="Tahap impor"><span class="import-step"><b>1</b> Workbook</span><span aria-hidden="true">›</span><span class="import-step"><b>2</b> Jenis plan</span><span aria-hidden="true">›</span><span class="import-step"><b>3</b> Pemetaan</span><span aria-hidden="true">›</span><span class="import-step"><b>4</b> Pratinjau</span></div>
-          <label class="upload-zone" for="workbook-file"><strong>Pilih file training plan (.xlsx)</strong><span>Sheet sesi akan dipetakan terpisah dari sheet pendukung.</span><input id="workbook-file" type="file" accept=".xlsx,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"></label>
+          <div class="panel-head"><div><h2 id="import-workbook-title">1. Select a workbook</h2><div class="panel-subtitle">The file is read on this device and is not uploaded to a server.</div></div></div>
+          <div class="import-steps" aria-label="Import steps"><span class="import-step"><b>1</b> Workbook</span><span aria-hidden="true">›</span><span class="import-step"><b>2</b> Plan type</span><span aria-hidden="true">›</span><span class="import-step"><b>3</b> Mapping</span><span aria-hidden="true">›</span><span class="import-step"><b>4</b> Preview</span></div>
+          <label class="upload-zone" for="workbook-file"><strong>Select a training plan file (.xlsx)</strong><span>Session sheets are mapped separately from supporting sheets.</span><input id="workbook-file" type="file" accept=".xlsx,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"></label>
           <div id="import-feedback" aria-live="polite"></div>
         </section>
         <section class="panel section-gap" id="import-mapping-panel" hidden>
-          <div class="panel-head"><div><h2>2. Kenali jenis plan</h2><div class="panel-subtitle" id="import-detection-copy"></div></div><span class="status" id="import-file-badge"></span></div>
+          <div class="panel-head"><div><h2>2. Identify the plan type</h2><div class="panel-subtitle" id="import-detection-copy"></div></div><span class="status" id="import-file-badge"></span></div>
           <div class="form-grid">
-            <div class="field"><label for="profile-select">Jenis plan</label><select id="profile-select"><option value="hm">HM Sub2 · 14 minggu</option><option value="analyst">Data Analyst · 7 minggu</option><option value="generic">Plan umum</option></select></div>
-            <div class="field"><label for="primary-sheet-select">Sheet utama</label><select id="primary-sheet-select"></select></div>
+            <div class="field"><label for="profile-select">Plan type</label><select id="profile-select"><option value="hm">HM Sub2 · 14 weeks</option><option value="analyst">Data Analyst · 7 weeks</option><option value="generic">General plan</option></select></div>
+            <div class="field"><label for="primary-sheet-select">Main sheet</label><select id="primary-sheet-select"></select></div>
           </div>
           <div id="formula-warning"></div>
-          <div class="section-gap"><h2>3. Tujuan setiap sheet</h2><div class="panel-subtitle">Sheet pendukung tetap terpisah dari daftar sesi.</div><div id="routing-list" class="routing-list"></div></div>
-          <div class="section-gap"><h2>Pencocokan kolom sesi</h2><div class="panel-subtitle">Periksa pilihan otomatis atau ubah kolom sumber sebelum pratinjau.</div><div id="mapping-fields" class="mapping-list"></div></div>
-          <div class="section-gap"><div class="panel-head"><div><h2>4. Pratinjau sesi</h2><div class="panel-subtitle" id="preview-count"></div></div><span class="status" id="preview-status"></span></div><div id="preview-table" class="table-wrap"></div></div>
-          <div class="inline-actions"><button class="button" id="save-import-button" disabled>Simpan plan di perangkat ini</button><span class="quiet" id="save-helper" aria-live="polite"></span></div>
+          <div class="section-gap"><h2>3. Sheet purposes</h2><div class="panel-subtitle">Supporting sheets stay separate from the session list.</div><div id="routing-list" class="routing-list"></div></div>
+          <div class="section-gap"><h2>Session column mapping</h2><div class="panel-subtitle">Review the suggested matches or change source columns before previewing.</div><div id="mapping-fields" class="mapping-list"></div></div>
+          <div class="section-gap"><div class="panel-head"><div><h2>4. Session preview</h2><div class="panel-subtitle" id="preview-count"></div></div><span class="status" id="preview-status"></span></div><div id="preview-table" class="table-wrap"></div></div>
+          <div class="inline-actions"><button class="button" id="save-import-button" disabled>Save plan to this device</button><span class="quiet" id="save-helper" aria-live="polite"></span></div>
         </section>
       </section>
 
       <section class="view" id="view-reminders" aria-labelledby="reminders-title" hidden>
-        <div class="page-head"><div><p class="eyebrow">Pengingat sesi</p><h1 id="reminders-title">Reminder</h1><p class="subtitle">Simpan jam pengingat pilihan di browser ini.</p></div></div>
-        <section class="panel"><div class="panel-head"><div><h2>Pengingat harian</h2><div class="panel-subtitle">Preferensi ini disimpan pada perangkat.</div></div></div><div class="form-grid"><div class="field"><label for="reminder-time">Jam pengingat</label><input id="reminder-time" type="time"></div><div class="field"><label for="reminder-enabled">Status</label><select id="reminder-enabled"><option value="off">Mati</option><option value="on">Aktif</option></select></div></div><div class="inline-actions"><button class="button" id="save-reminder">Simpan pengaturan</button><span id="reminder-feedback" class="quiet" aria-live="polite"></span></div><div class="notice info">Pengaturan tersimpan secara lokal. Notifikasi terjadwal belum dikirim pada versi ini.</div></section>
+        <div class="page-head"><div><p class="eyebrow">Session notifications</p><h1 id="reminders-title">Reminder</h1><p class="subtitle">Choose a daily reminder time for this browser.</p></div></div>
+        <section class="panel"><div class="panel-head"><div><h2>Daily reminder</h2><div class="panel-subtitle">This preference is saved on this device.</div></div></div><div class="form-grid"><div class="field"><label for="reminder-time">Reminder time</label><input id="reminder-time" type="time"></div><div class="field"><label for="reminder-enabled">Status</label><select id="reminder-enabled"><option value="off">Off</option><option value="on">On</option></select></div></div><div class="inline-actions"><button class="button" id="save-reminder">Save settings</button><span id="reminder-feedback" class="quiet" aria-live="polite"></span></div><div class="notice info">Notifications require browser permission and a secure connection (HTTPS or localhost). The reminder is checked while MyTracker is open; it cannot reliably run after the browser or app is closed.</div></section>
       </section>
     </main>
   </div>
 
-  <nav class="bottom-nav" aria-label="Navigasi utama di smartphone">
-    <button data-view="dashboard" aria-current="page"><span class="nav-glyph" aria-hidden="true">⌂</span>Beranda</button>
-    <button data-view="sessions"><span class="nav-glyph" aria-hidden="true">☷</span>Sesi</button>
-    <button data-view="plans"><span class="nav-glyph" aria-hidden="true">▦</span>Plan</button>
-    <button data-view="import"><span class="nav-glyph" aria-hidden="true">⇧</span>Impor</button>
-    <button data-view="progress"><span class="nav-glyph" aria-hidden="true">⌁</span>Progres</button>
-    <button data-view="reminders"><span class="nav-glyph" aria-hidden="true">◷</span>Pengingat</button>
+  <nav class="bottom-nav" aria-label="Primary mobile navigation">
+    <button data-view="dashboard" aria-current="page"><span class="nav-glyph" aria-hidden="true"><svg class="icon" viewBox="0 0 24 24"><path d="m3 10 9-7 9 7v10a1 1 0 0 1-1 1h-5v-7H9v7H4a1 1 0 0 1-1-1z"/></svg></span>Home</button>
+    <button data-view="sessions"><span class="nav-glyph" aria-hidden="true"><svg class="icon" viewBox="0 0 24 24"><path d="M8 6h13M8 12h13M8 18h13"/><circle cx="3" cy="6" r=".7"/><circle cx="3" cy="12" r=".7"/><circle cx="3" cy="18" r=".7"/></svg></span>Sessions</button>
+    <button data-view="plans"><span class="nav-glyph" aria-hidden="true"><svg class="icon" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="17" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg></span>Plans</button>
+    <button data-view="import"><span class="nav-glyph" aria-hidden="true"><svg class="icon" viewBox="0 0 24 24"><path d="M12 16V3m0 0L7 8m5-5 5 5M4 15v5h16v-5"/></svg></span>Import</button>
+    <button data-view="progress"><span class="nav-glyph" aria-hidden="true"><svg class="icon" viewBox="0 0 24 24"><path d="M3 20V4M3 20h18M7 15l4-5 4 3 6-8"/></svg></span>Progress</button>
+    <button data-view="reminders"><span class="nav-glyph" aria-hidden="true"><svg class="icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg></span>Reminder</button>
   </nav>
 
   <dialog class="plan-dialog" id="add-plan-dialog" aria-labelledby="add-plan-title">
     <form class="dialog-form" id="add-plan-form">
-      <div><p class="eyebrow">Rencana baru</p><h2 id="add-plan-title">Add plan</h2></div>
-      <p>Buat plan kosong dan tambah sesi sendiri, atau impor workbook Excel dengan jalur pemetaan sesuai formatnya.</p>
-      <div class="field"><label for="new-plan-name">Nama plan</label><input id="new-plan-name" name="name" required maxlength="100" placeholder="Contoh: Latihan HM musim semi"></div>
-      <div class="field"><label for="new-plan-type">Jenis plan</label><select id="new-plan-type" name="profile"><option value="hm">Latihan lari</option><option value="analyst">Rencana belajar</option><option value="generic">Plan umum</option></select></div>
-      <div class="dialog-actions"><button class="button" type="submit">Buat plan kosong</button><button class="button secondary" type="button" data-action="import-from-dialog">Impor Excel</button><button class="button ghost" type="button" data-action="close-dialog">Batal</button></div>
+      <div><p class="eyebrow">New plan</p><h2 id="add-plan-title">Add plan</h2></div>
+      <p>Create an empty plan and add sessions yourself, or import an Excel workbook using its matching layout.</p>
+      <div class="field"><label for="new-plan-name">Plan name</label><input id="new-plan-name" name="name" required maxlength="100" placeholder="Example: Spring half marathon training"></div>
+      <div class="field"><label for="new-plan-type">Plan type</label><select id="new-plan-type" name="profile"><option value="hm">Running training</option><option value="analyst">Study plan</option><option value="generic">General plan</option></select></div>
+      <div class="dialog-actions"><button class="button" type="submit">Create empty plan</button><button class="button secondary" type="button" data-action="import-from-dialog">Import Excel</button><button class="button ghost" type="button" data-action="close-dialog">Cancel</button></div>
     </form>
   </dialog>
 
@@ -422,81 +462,97 @@
       const MAIN_NS = "http://schemas.openxmlformats.org/spreadsheetml/2006/main";
       const REL_NS = "http://schemas.openxmlformats.org/officeDocument/2006/relationships";
       const PACKAGE_REL_NS = "http://schemas.openxmlformats.org/package/2006/relationships";
-      const VIEW_LABELS = { dashboard: "Dashboard", sessions: "Checklist session", plans: "Plans", progress: "Progress", import: "Import Plans", reminders: "Reminder" };
+      const VIEW_LABELS = { dashboard: "Dashboard", sessions: "Session checklist", plans: "Plans", progress: "Progress", import: "Import plans", reminders: "Reminder" };
       const CONFIGS = {
         hm: {
-          label: "HM Sub2 · 14 minggu", mainSheet: "Plan 14 Minggu", countLabel: "sesi latihan",
+          label: "HM Sub2 · 14 weeks", mainSheet: "Plan 14 Minggu", countLabel: "training sessions",
           fields: [
-            { key: "week", label: "Minggu", aliases: ["Minggu"] },
-            { key: "phase", label: "Fase", aliases: ["Fase"] },
-            { key: "day", label: "Hari", aliases: ["Hari"] },
-            { key: "date", label: "Tanggal", aliases: ["Tanggal"] },
-            { key: "type", label: "Jenis sesi", aliases: ["Jenis sesi"] },
-            { key: "zone", label: "Zona utama", aliases: ["Zona utama"] },
-            { key: "details", label: "Detail sesi", aliases: ["Detail sesi"] },
-            { key: "plannedDistance", label: "Jarak rencana (km)", aliases: ["Jarak rencana (km)"] },
+            { key: "week", label: "Week", aliases: ["Minggu", "Week"] },
+            { key: "phase", label: "Phase", aliases: ["Fase", "Phase"] },
+            { key: "day", label: "Day", aliases: ["Hari", "Day"] },
+            { key: "date", label: "Date", aliases: ["Tanggal", "Date"] },
+            { key: "type", label: "Session type", aliases: ["Jenis sesi", "Session type"] },
+            { key: "zone", label: "Main zone", aliases: ["Zona utama", "Main zone"] },
+            { key: "details", label: "Session details", aliases: ["Detail sesi", "Session details"] },
+            { key: "plannedDistance", label: "Planned distance (km)", aliases: ["Jarak rencana (km)", "Planned distance (km)"] },
             { key: "targetHr", label: "Target HR", aliases: ["Target HR (bpm)"] },
             { key: "targetPace", label: "Target pace", aliases: ["Target pace (estimasi)"] },
-            { key: "purpose", label: "Tujuan sesi", aliases: ["Tujuan sesi"] },
-            { key: "actualDistance", label: "Km aktual", aliases: ["Km aktual"] },
-            { key: "actualHr", label: "HR aktual", aliases: ["HR rata-rata aktual"] },
-            { key: "actualPace", label: "Pace aktual", aliases: ["Pace aktual (mm:ss)"] },
-            { key: "completed", label: "Selesai?", aliases: ["Selesai?"] },
-            { key: "notes", label: "Catatan", aliases: ["Catatan"] }
+            { key: "purpose", label: "Session purpose", aliases: ["Tujuan sesi", "Session purpose"] },
+            { key: "actualDistance", label: "Actual distance", aliases: ["Km aktual", "Actual distance"] },
+            { key: "actualHr", label: "Actual HR", aliases: ["HR rata-rata aktual"] },
+            { key: "actualPace", label: "Actual pace", aliases: ["Pace aktual (mm:ss)", "Actual pace (mm:ss)"] },
+            { key: "completed", label: "Completed?", aliases: ["Selesai?", "Completed?"] },
+            { key: "notes", label: "Notes", aliases: ["Catatan"] }
           ],
           routes: {
-            "Ringkasan": ["Parameter dan target plan", "Tanggal mulai dan sasaran yang dipakai plan", "Supaya setelan rencana mudah dilihat tanpa menambah baris sesi."],
-            "Ringkasan Mingguan": ["Rekap progres mingguan", "Aplikasi menghitung ulang dari sesi dan realisasi", "Mencegah angka ringkasan lama atau hasil rumus yang basi dipakai sebagai data sesi."],
-            "Zona HR": ["Referensi zona HR", "Rentang detak jantung untuk tiap zona latihan", "Dipakai untuk memahami target HR yang muncul pada sesi lari."],
-            "Panduan Sesi": ["Panduan jenis sesi", "Arti dan cara menjalankan tiap jenis latihan", "Membantu membaca instruksi latihan tanpa mengubahnya menjadi sesi tambahan."],
-            "Titik Cek": ["Checkpoint plan", "Tes dan keputusan evaluasi yang sudah dirancang", "Menandai waktu untuk mengevaluasi plan, bukan jadwal latihan biasa."]
+            "Ringkasan": ["Plan settings and targets", "Start date and goals used by the plan", "Keeps plan settings easy to review without adding session rows."],
+            "Ringkasan Mingguan": ["Weekly progress summary", "Progress is recalculated from sessions and completed results", "Prevents stale or outdated formula summaries from being treated as sessions."],
+            "Zona HR": ["Heart rate zones", "Heart rate ranges for each training zone", "Helps explain the HR targets shown in running sessions."],
+            "Panduan Sesi": ["Session guide", "What each workout type means and how to do it", "Keeps workout instructions readable without adding them as extra sessions."],
+            "Titik Cek": ["Plan checkpoints", "Planned tests and review decisions", "Marks plan review points, not regular training sessions."]
           }
         },
         analyst: {
-          label: "Data Analyst · 7 minggu", mainSheet: "Training Plan", countLabel: "sesi belajar",
+          label: "Data Analyst · 7 weeks", mainSheet: "Training Plan", countLabel: "study sessions",
           fields: [
-            { key: "week", label: "Minggu", aliases: ["Minggu"] },
-            { key: "day", label: "Hari", aliases: ["Hari"] },
-            { key: "type", label: "Jenis sesi", aliases: ["Jenis"] },
-            { key: "topic", label: "Topik", aliases: ["Topik"] },
-            { key: "duration", label: "Durasi (jam)", aliases: ["Durasi (jam)"] },
+            { key: "week", label: "Week", aliases: ["Minggu", "Week"] },
+            { key: "day", label: "Day", aliases: ["Hari", "Day"] },
+            { key: "type", label: "Session type", aliases: ["Jenis"] },
+            { key: "topic", label: "Topic", aliases: ["Topik"] },
+            { key: "duration", label: "Duration (hours)", aliases: ["Durasi (jam)", "Duration (hours)"] },
             { key: "dataset", label: "Dataset", aliases: ["Dataset"] },
-            { key: "steps", label: "Langkah", aliases: ["Apa yang harus dilakukan (langkah)"] },
+            { key: "steps", label: "Steps", aliases: ["Apa yang harus dilakukan (langkah)"] },
             { key: "output", label: "Target output", aliases: ["Target output (bukti selesai)"] },
             { key: "status", label: "Status", aliases: ["Status"] },
-            { key: "completedDate", label: "Tanggal selesai", aliases: ["Tanggal selesai"] },
-            { key: "notes", label: "Catatan pribadi", aliases: ["Catatan pribadi"] }
+            { key: "completedDate", label: "Completion date", aliases: ["Tanggal selesai", "Completion date"] },
+            { key: "notes", label: "Personal notes", aliases: ["Catatan pribadi", "Personal notes"] }
           ],
           routes: {
-            "Mulai Di Sini": ["Informasi workbook", "Petunjuk penggunaan workbook", "Menjelaskan cara mengisi file, bukan aktivitas belajar."],
-            "Log Harian": ["Log belajar", "Catatan kegiatan dan durasi aktual", "Mencatat pekerjaan yang sudah dilakukan tanpa menggandakannya sebagai sesi rencana."],
-            "Progres": ["Ringkasan progres", "Nilai progres workbook disimpan sebagai referensi", "Aplikasi menghitung ulang progres dari sesi agar angka rumus lama tidak ikut menggandakan data."],
-            "Panduan Mingguan": ["Panduan mingguan", "Tema, konsep, dan kriteria tiap minggu", "Menjadi bahan acuan saat mengerjakan sesi belajar."],
-            "Dataset": ["Referensi dataset", "Daftar sumber dataset untuk latihan", "Menghubungkan tugas belajar dengan sumber data tanpa membuat sesi baru."],
-            "Soal Tes 1": ["Asesmen", "Soal dan hasil evaluasi", "Tes disimpan sebagai evaluasi tersendiri, bukan sesi belajar harian."]
+            "Mulai Di Sini": ["Workbook information", "Instructions for using the workbook", "Explains how to fill in the file, not a study activity."],
+            "Log Harian": ["Study log", "Records activities and actual time spent", "Tracks completed work without duplicating it as a planned session."],
+            "Progres": ["Progress summary", "Workbook progress values are kept as reference", "Progress is recalculated from sessions so old formula totals do not duplicate results."],
+            "Panduan Mingguan": ["Weekly guide", "Themes, concepts, and criteria for each week", "Provides context while working through study sessions."],
+            "Dataset": ["Dataset reference", "List of dataset sources for exercises", "Connects study tasks to data sources without creating extra sessions."],
+            "Soal Tes 1": ["Assessment", "Questions and evaluation results", "Keeps tests as separate assessments, not daily study sessions."]
           }
         },
         generic: {
-          label: "Plan umum", mainSheet: "", countLabel: "sesi",
+          label: "General plan", mainSheet: "", countLabel: "sessions",
           fields: [
-            { key: "week", label: "Minggu", aliases: ["Minggu", "Week"] },
-            { key: "day", label: "Hari", aliases: ["Hari", "Day"] },
-            { key: "date", label: "Tanggal", aliases: ["Tanggal", "Date"] },
-            { key: "type", label: "Jenis sesi", aliases: ["Jenis sesi", "Jenis", "Type"] },
-            { key: "topic", label: "Topik atau nama sesi", aliases: ["Topik", "Nama sesi", "Activity"] },
-            { key: "details", label: "Detail", aliases: ["Detail", "Deskripsi", "Description"] },
-            { key: "plannedDistance", label: "Jarak rencana", aliases: ["Jarak rencana (km)", "Distance"] },
-            { key: "duration", label: "Durasi", aliases: ["Durasi", "Durasi (jam)", "Duration"] },
-            { key: "status", label: "Status", aliases: ["Status", "Selesai?"] },
-            { key: "notes", label: "Catatan", aliases: ["Catatan", "Notes"] }
+            { key: "week", label: "Week", aliases: ["Minggu", "Week"] },
+            { key: "day", label: "Day", aliases: ["Hari", "Day"] },
+            { key: "date", label: "Date", aliases: ["Tanggal", "Date"] },
+            { key: "type", label: "Session type", aliases: ["Jenis sesi", "Jenis", "Type"] },
+            { key: "topic", label: "Topic or session name", aliases: ["Topik", "Nama sesi", "Activity"] },
+            { key: "details", label: "Details", aliases: ["Detail", "Deskripsi", "Description"] },
+            { key: "plannedDistance", label: "Planned distance", aliases: ["Jarak rencana (km)", "Distance"] },
+            { key: "duration", label: "Duration", aliases: ["Durasi", "Durasi (jam)", "Duration"] },
+            { key: "status", label: "Status", aliases: ["Status", "Selesai?", "Completed?"] },
+            { key: "notes", label: "Notes", aliases: ["Catatan", "Notes"] }
           ], routes: {}
         }
       };
       const $ = (selector, root = document) => root.querySelector(selector);
       const $$ = (selector, root = document) => [...root.querySelectorAll(selector)];
       const escapeHtml = value => String(value ?? "").replace(/[&<>"']/g, char => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[char]);
+      const icon = (name, size = 20) => {
+        const shapes = {
+          sun: '<circle cx="12" cy="12" r="4"/><path d="M12 2v2m0 16v2M4.93 4.93l1.42 1.42m11.3 11.3 1.42 1.42M2 12h2m16 0h2M4.93 19.07l1.42-1.42m11.3-11.3 1.42-1.42"/>',
+          moon: '<path d="M20.8 14.2A8.5 8.5 0 0 1 9.8 3.2 8.5 8.5 0 1 0 20.8 14.2Z"/>',
+          calendar: '<rect x="3" y="4" width="18" height="17" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/>',
+          list: '<path d="M8 6h13M8 12h13M8 18h13"/><circle cx="3" cy="6" r=".7"/><circle cx="3" cy="12" r=".7"/><circle cx="3" cy="18" r=".7"/>',
+          check: '<path d="m5 12 4 4L19 6"/>',
+          clock: '<circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/>',
+          activity: '<path d="M3 12h4l3-8 4 16 3-8h4"/>',
+          circle: '<circle cx="12" cy="12" r="8"/>'
+        };
+        return `<svg class="icon" width="${size}" height="${size}" viewBox="0 0 24 24" aria-hidden="true">${shapes[name] || shapes.activity}</svg>`;
+      };
       const normalize = value => String(value ?? "").normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase().replace(/[^a-z0-9]+/g, "").trim();
-      const state = { plans: [], activePlanId: null, reminder: { time: "", enabled: false } };
+      const state = { plans: [], activePlanId: null, reminder: { time: "", enabled: false, lastSentDate: "" } };
+      let reminderRegistration = null;
+      let reminderTimer = null;
+      let reminderInFlight = false;
       let importWork = null;
       let currentView = "dashboard";
 
@@ -506,25 +562,25 @@
           if (saved && Array.isArray(saved.plans)) {
             state.plans = saved.plans;
             state.activePlanId = saved.activePlanId || saved.plans[0]?.id || null;
-            state.reminder = saved.reminder || state.reminder;
+            state.reminder = { ...state.reminder, ...(saved.reminder || {}) };
           }
-        } catch (error) { console.warn("Data lokal tidak dapat dibaca.", error); }
+        } catch (error) { console.warn("Local data could not be read.", error); }
       }
       function persistState() {
         try { localStorage.setItem(STORAGE_KEY, JSON.stringify({ plans: state.plans, activePlanId: state.activePlanId, reminder: state.reminder })); return true; }
         catch (error) { console.error(error); return false; }
       }
       function activePlan() { return state.plans.find(plan => plan.id === state.activePlanId) || state.plans[0] || null; }
-      function formatDate(date = new Date()) { return new Intl.DateTimeFormat("id-ID", { weekday: "long", day: "numeric", month: "long" }).format(date); }
+      function formatDate(date = new Date()) { return new Intl.DateTimeFormat("en-US", { weekday: "long", day: "numeric", month: "long" }).format(date); }
       function applyTheme(theme, save = false) {
         const light = theme === "light";
         document.documentElement.dataset.theme = light ? "light" : "dark";
         const toggle = $("#theme-toggle");
         toggle.setAttribute("aria-pressed", String(light));
-        toggle.title = light ? "Ubah ke tema gelap" : "Ubah ke tema terang";
-        toggle.querySelector(".theme-icon").textContent = light ? "☾" : "☼";
+        toggle.title = light ? "Switch to dark theme" : "Switch to light theme";
+        toggle.querySelector(".theme-icon").innerHTML = icon(light ? "moon" : "sun", 21);
         document.querySelector('meta[name="theme-color"]').content = "#211f1f";
-        if (save) { try { localStorage.setItem("plan-tracker-theme", light ? "light" : "dark"); } catch (error) { console.warn("Preferensi tema tidak dapat disimpan.", error); } }
+        if (save) { try { localStorage.setItem("plan-tracker-theme", light ? "light" : "dark"); } catch (error) { console.warn("The theme preference could not be saved.", error); } }
       }
       function setView(view) {
         if (!VIEW_LABELS[view]) return;
@@ -567,9 +623,9 @@
         return [...groups.values()].sort((a,b) => a.week - b.week);
       }
       function completionStatus(session) {
-        if (session.completed) return "Selesai";
-        if (session.status && /selesai|complete|done|ya/i.test(String(session.status))) return "Selesai";
-        return "Belum selesai";
+        if (session.completed) return "Completed";
+        if (session.status && /selesai|complete|done|ya/i.test(String(session.status))) return "Completed";
+        return "Not completed";
       }
       function nextSession(plan) { return sessionsFor(plan).find(s => !s.completed && !/selesai|complete|done|ya/i.test(String(s.status || ""))) || null; }
       function renderAll() {
@@ -580,70 +636,126 @@
         const sessions = sessionsFor(plan);
         const done = sessions.filter(s => s.completed || /selesai|complete|done|ya/i.test(String(s.status || ""))).length;
         const next = nextSession(plan);
-        const planType = plan ? (CONFIGS[plan.profile]?.label || "Plan umum") : "Belum ada plan";
+        const planType = plan ? (CONFIGS[plan.profile]?.label || "General plan") : "No plan yet";
+        $("#dashboard-title").textContent = "Good morning";
+        $("#dashboard-hero-subtitle").textContent = plan ? `Keep ${plan.name} on track. Your next session is ready when you are.` : "Plan your training, check off sessions, and see your progress build week by week.";
+        $("#dashboard-plan-state").textContent = plan ? plan.name : "No active plan";
+        const primaryAction = $("#dashboard-primary-action");
+        if (plan) { primaryAction.textContent = "View sessions"; primaryAction.dataset.view = "sessions"; delete primaryAction.dataset.action; }
+        else { primaryAction.textContent = "Add plan"; primaryAction.dataset.action = "add-plan"; delete primaryAction.dataset.view; }
         const cards = [
-          ["Plan aktif", plan ? plan.name : "Belum ada plan", plan ? planType : "Impor workbook untuk mulai", "▦"],
-          ["Sesi selesai", plan ? `${done} dari ${sessions.length}` : "Belum ada catatan", plan ? "Status dari sesi plan" : "Akan dihitung dari data plan", "✓"],
-          ["Sesi berikutnya", next ? (next.topic || next.details || next.type || "Sesi latihan") : (plan ? "Semua sesi selesai" : "Menunggu plan pertama"), next ? [next.day, next.date ? excelDate(next.date) : ""].filter(Boolean).join(" · ") : "Rencana akan tampil setelah diimpor", "◷"]
+          ["Active plan", plan ? plan.name : "No plan yet", plan ? planType : "Choose a plan to get started", "calendar"],
+          ["Sessions", plan ? sessions.length : "0", "Planned in this plan", "list"],
+          ["Completed", plan ? `${done} / ${sessions.length}` : "0", sessions.length ? `${Math.round(done / sessions.length * 100)}% complete` : "No completed sessions yet", "check"],
+          ["Next up", next ? (next.topic || next.details || next.type || "Training session") : (plan ? "All sessions complete" : "Waiting for your plan"), next ? [next.day, next.date ? excelDate(next.date) : ""].filter(Boolean).join(" · ") : (plan ? "No upcoming sessions" : "Your schedule will appear here"), "clock"]
         ];
-        $("#dashboard-summary").innerHTML = cards.map(([label,value,foot,glyph]) => `<article class="card"><div class="card-head"><span class="card-label">${escapeHtml(label)}</span><span class="glyph-box" aria-hidden="true">${glyph}</span></div><div class="card-value">${escapeHtml(value)}</div><div class="card-foot">${escapeHtml(foot)}</div></article>`).join("");
+        $("#dashboard-summary").innerHTML = cards.map(([label,value,foot,glyph]) => `<article class="card"><div class="card-head"><span class="card-label">${escapeHtml(label)}</span><span class="glyph-box">${icon(glyph,20)}</span></div><div class="card-value">${escapeHtml(value)}</div><div class="card-foot">${escapeHtml(foot)}</div></article>`).join("");
+        const sessionsBody = $("#dashboard-sessions-body");
+        const sessionsStatus = $("#dashboard-sessions-status");
+        const upcoming = sessions.filter(s => !(s.completed || /selesai|complete|done|ya/i.test(String(s.status || "")))).slice(0, 3);
+        sessionsStatus.textContent = plan ? `${upcoming.length} upcoming` : "No plan yet";
+        if (!plan) {
+          sessionsBody.innerHTML = `<div class="dashboard-empty"><span class="glyph-box">${icon("list",20)}</span><strong>Your sessions will show up here</strong><p>Add a training or study plan to see upcoming sessions and track them day by day.</p><div class="dashboard-empty-actions"><button class="button secondary" data-action="add-plan">Add plan</button><button class="button ghost" data-view="import">Import plan</button></div></div>`;
+        } else if (!upcoming.length) {
+          sessionsBody.innerHTML = `<div class="dashboard-empty"><span class="glyph-box">${icon("check",20)}</span><strong>You're all caught up</strong><p>There are no upcoming sessions in this plan.</p><div class="dashboard-empty-actions"><button class="button secondary" data-view="sessions">Review sessions</button></div></div>`;
+        } else {
+          sessionsBody.innerHTML = `<div class="dashboard-session-list">${upcoming.map((session,index) => {
+            const title = session.topic || session.details || session.type || "Training session";
+            const meta = [session.week ? `Week ${session.week}` : "", session.type || "", session.plannedDistance ? `${session.plannedDistance} km` : "", session.duration ? `${session.duration} hr` : ""].filter(Boolean).join(" · ");
+            const day = [session.day,session.date ? excelDate(session.date) : ""].filter(Boolean).join(" · ") || `Session ${index + 1}`;
+            return `<div class="dashboard-session-row"><span class="dashboard-session-icon">${index === 0 ? icon("activity",17) : icon("circle",17)}</span><span class="dashboard-session-copy"><strong>${escapeHtml(title)}</strong><span>${escapeHtml(meta || planType)}</span></span><span class="dashboard-session-day">${escapeHtml(day)}</span></div>`;
+          }).join("")}</div><div class="dashboard-panel-footer"><button class="button secondary" data-view="sessions">Open session checklist</button></div>`;
+        }
         const progressBody = $("#dashboard-progress-body");
         if (!plan) {
-          $("#dashboard-progress-status").textContent = "Belum ada data";
-          progressBody.innerHTML = `<div class="empty-state"><span class="glyph-box" aria-hidden="true">⌁</span><strong>Progres akan muncul setelah ada plan</strong><p>Impor file Excel. Sheet sesi, progres, dan log akan diproses pada jalurnya masing-masing.</p><button class="button secondary" data-view="import">Pilih workbook</button></div>`;
+          progressBody.innerHTML = `<div class="dashboard-empty"><span class="glyph-box">${icon("activity",20)}</span><strong>Your weekly progress will appear here</strong><p>Progress is calculated from your plan sessions as you complete them.</p></div>`;
         } else {
           const weeks = weekTotals(plan).slice(0,4);
-          $("#dashboard-progress-status").textContent = `${done} sesi selesai`;
-          progressBody.innerHTML = weeks.length ? `<div class="progress-weeks">${weeks.map(w => `<div class="week-row"><span class="week-label">Minggu ${w.week}</span><div class="week-track" role="progressbar" aria-label="Progres minggu ${w.week}" aria-valuemin="0" aria-valuemax="${w.total}" aria-valuenow="${w.done}"><div class="week-fill" style="width:${w.total ? Math.round(w.done / w.total * 100) : 0}%"></div></div><span class="week-count">${w.done}/${w.total}</span></div>`).join("")}</div>` : `<div class="empty-state"><strong>Belum ada sesi yang dapat diringkas</strong><p>Periksa sheet sesi dan pemetaan kolom.</p></div>`;
+          progressBody.innerHTML = weeks.length ? `<div class="dashboard-week-list">${weeks.map(w => `<div class="dashboard-week-row"><span class="dashboard-week-label">Week ${w.week}</span><div class="week-track" role="progressbar" aria-label="Week ${w.week} progress" aria-valuemin="0" aria-valuemax="${w.total}" aria-valuenow="${w.done}"><div class="week-fill" style="width:${w.total ? Math.round(w.done / w.total * 100) : 0}%"></div></div><span class="dashboard-week-count">${w.done} / ${w.total}</span></div>`).join("")}</div>` : `<div class="dashboard-empty"><span class="glyph-box">${icon("activity",20)}</span><strong>No sessions in this plan yet</strong><p>Add sessions or import a workbook to build your weekly view.</p></div>`;
         }
-        const planBody = $("#dashboard-plan-body");
-        if (!plan) planBody.innerHTML = `<div class="empty-state"><strong>Rencana akan tampil di sini</strong><p>Buat plan kosong dan tambah sesi sendiri, atau impor workbook.</p><button class="button secondary" data-action="add-plan">Add plan</button></div>`;
-        else planBody.innerHTML = `<div class="inline-list"><div class="list-row"><div class="list-row-main"><strong>${escapeHtml(plan.name)}</strong><span>${escapeHtml(planType)} · ${sessions.length} sesi</span></div><span class="status">Aktif</span></div><div class="support-list"><button class="button secondary" data-view="plans">Lihat detail plan</button></div></div>`;
       }
       function renderPlanList() {
         const host = $("#plan-list");
-        if (!state.plans.length) { host.innerHTML = `<div class="empty-state"><strong>Belum ada plan tersimpan</strong><p>Buat plan kosong dan tambah sesi sendiri, atau impor workbook.</p><button class="button secondary" data-action="add-plan">Add plan</button></div>`; return; }
+        if (!state.plans.length) { host.innerHTML = `<div class="empty-state"><strong>No saved plans yet</strong><p>Create an empty plan and add sessions, or import a workbook.</p><button class="button secondary" data-action="add-plan">Add plan</button></div>`; return; }
         const hasLegacyPlan = state.plans.some(plan => !plan.importVersion);
-        host.innerHTML = `${hasLegacyPlan ? `<div class="notice">Plan lama masih menggunakan hasil pemetaan sebelumnya. Impor ulang workbook untuk memperbarui jumlah sesi.</div>` : ""}${state.plans.map(plan => {
+        host.innerHTML = `${hasLegacyPlan ? `<div class="notice">This plan uses an older mapping. Reimport the workbook to update its session count.</div>` : ""}${state.plans.map(plan => {
           const fileMeta = plan.fileName ? ` · ${escapeHtml(plan.fileName)}` : "";
-          return `<div class="plan-entry"><div class="list-row"><div class="list-row-main"><strong>${escapeHtml(plan.name)}</strong><span>${escapeHtml(CONFIGS[plan.profile]?.label || "Plan umum")} · ${sessionsFor(plan).length} sesi${fileMeta}</span></div><div class="plan-actions"><button class="button ${plan.id === state.activePlanId ? "" : "secondary"}" data-active-plan="${escapeHtml(plan.id)}">${plan.id === state.activePlanId ? "Plan aktif" : "Pilih plan"}</button><button class="button danger" data-remove-plan="${escapeHtml(plan.id)}" aria-label="Hapus ${escapeHtml(plan.name)}">Hapus</button></div></div></div>`;
+          return `<div class="plan-entry"><div class="list-row"><div class="list-row-main"><strong>${escapeHtml(plan.name)}</strong><span>${escapeHtml(CONFIGS[plan.profile]?.label || "General plan")} · ${sessionsFor(plan).length} sessions${fileMeta}</span></div><div class="plan-actions"><button class="button ${plan.id === state.activePlanId ? "" : "secondary"}" data-active-plan="${escapeHtml(plan.id)}">${plan.id === state.activePlanId ? "Active plan" : "Select plan"}</button><button class="button danger" data-remove-plan="${escapeHtml(plan.id)}" aria-label="Remove ${escapeHtml(plan.name)}">Remove</button></div></div></div>`;
         }).join("")}`;
       }
       function renderSessionView() {
         const select = $("#session-plan-select"); const old = select.value;
-        select.innerHTML = state.plans.length ? state.plans.map(p => `<option value="${escapeHtml(p.id)}">${escapeHtml(p.name)}</option>`).join("") : `<option value="">Belum ada plan</option>`;
+        select.innerHTML = state.plans.length ? state.plans.map(p => `<option value="${escapeHtml(p.id)}">${escapeHtml(p.name)}</option>`).join("") : `<option value="">No plan yet</option>`;
         select.value = state.plans.some(p => p.id === old) ? old : (state.activePlanId || "");
         const plan = state.plans.find(p => p.id === select.value) || activePlan();
         const host = $("#session-list");
         const actions = $("#session-actions"); const manualForm = $("#manual-session-form");
-        if (!plan) { host.innerHTML = `<div class="empty-state"><strong>Belum ada plan untuk ditampilkan</strong><p>Buat plan kosong untuk menambah sesi manual, atau impor workbook.</p></div>`; actions.innerHTML = `<button class="button secondary" data-action="add-plan">Add plan</button>`; manualForm.hidden = true; return; }
-        actions.innerHTML = `<button class="button secondary" type="button" data-action="toggle-session-form">Tambah sesi manual</button>`;
-        $("#manual-duration-label").textContent = plan.profile === "analyst" ? "Durasi (jam, opsional)" : "Durasi (menit, opsional)";
+        if (!plan) { host.innerHTML = `<div class="empty-state"><strong>No plan to show yet</strong><p>Create an empty plan to add sessions manually, or import a workbook.</p></div>`; actions.innerHTML = `<button class="button secondary" data-action="add-plan">Add plan</button>`; manualForm.hidden = true; return; }
+        actions.innerHTML = `<button class="button secondary" type="button" data-action="toggle-session-form">Add session manually</button>`;
+        $("#manual-duration-label").textContent = plan.profile === "analyst" ? "Duration (hours, optional)" : "Duration (minutes, optional)";
         host.innerHTML = sessionsFor(plan).map((s,index) => {
-          const title = s.topic || s.details || s.type || "Sesi";
-          const sub = [s.week ? `Minggu ${s.week}` : "",s.day || "",s.date ? excelDate(s.date) : "",s.plannedDistance ? `${s.plannedDistance} km` : "",s.duration ? `${s.duration} jam` : ""].filter(Boolean).join(" · ");
+          const title = s.topic || s.details || s.type || "Session";
+          const sub = [s.week ? `Week ${s.week}` : "",s.day || "",s.date ? excelDate(s.date) : "",s.plannedDistance ? `${s.plannedDistance} km` : "",s.duration ? `${s.duration} hr` : ""].filter(Boolean).join(" · ");
           const isDone = !!s.completed || /selesai|complete|done|ya/i.test(String(s.status || ""));
-          return `<div class="list-row"><div class="completion-control"><input type="checkbox" id="done-${index}" data-session-index="${index}" ${isDone ? "checked" : ""}><label for="done-${index}"><strong>${escapeHtml(title)}</strong><span>${escapeHtml(sub)}${s.targetPace ? ` · Pace ${escapeHtml(s.targetPace)}` : ""}${s.targetHr ? ` · HR ${escapeHtml(s.targetHr)}` : ""}</span></label></div><span class="status ${isDone ? "" : "pending"}">${isDone ? "Selesai" : "Rencana"}</span></div>`;
-        }).join("") || `<div class="empty-state"><strong>Plan ini belum memiliki sesi</strong><p>Tambahkan sesi manual atau impor workbook ke plan ini.</p></div>`;
+          return `<div class="list-row"><div class="completion-control"><input type="checkbox" id="done-${index}" data-session-index="${index}" ${isDone ? "checked" : ""}><label for="done-${index}"><strong>${escapeHtml(title)}</strong><span>${escapeHtml(sub)}${s.targetPace ? ` · Pace ${escapeHtml(s.targetPace)}` : ""}${s.targetHr ? ` · HR ${escapeHtml(s.targetHr)}` : ""}</span></label></div><span class="status ${isDone ? "" : "pending"}">${isDone ? "Completed" : "Planned"}</span></div>`;
+        }).join("") || `<div class="empty-state"><strong>This plan has no sessions yet</strong><p>Add sessions manually or import a workbook into this plan.</p></div>`;
       }
       function renderProgress() {
         const select = $("#progress-plan-select"); const old = select.value;
-        select.innerHTML = state.plans.length ? state.plans.map(p => `<option value="${escapeHtml(p.id)}">${escapeHtml(p.name)}</option>`).join("") : `<option value="">Belum ada plan</option>`;
+        select.innerHTML = state.plans.length ? state.plans.map(p => `<option value="${escapeHtml(p.id)}">${escapeHtml(p.name)}</option>`).join("") : `<option value="">No plan yet</option>`;
         select.value = state.plans.some(p => p.id === old) ? old : (state.activePlanId || "");
         const plan = state.plans.find(p => p.id === select.value) || activePlan();
         const body = $("#progress-body");
-        if (!plan) { body.innerHTML = `<div class="empty-state"><strong>Belum ada progres untuk ditampilkan</strong><p>Impor plan terlebih dahulu.</p></div>`; return; }
+        if (!plan) { body.innerHTML = `<div class="empty-state"><strong>No progress to show yet</strong><p>Import a plan first.</p></div>`; return; }
         const weeks = weekTotals(plan);
-        body.innerHTML = weeks.length ? `<div class="progress-weeks">${weeks.map(w => `<div class="week-row"><span class="week-label">Minggu ${w.week}</span><div class="week-track" role="progressbar" aria-label="Sesi selesai pada minggu ${w.week}" aria-valuemin="0" aria-valuemax="${w.total}" aria-valuenow="${w.done}"><div class="week-fill" style="width:${w.total ? Math.round(w.done / w.total * 100) : 0}%"></div></div><span class="week-count">${w.done} dari ${w.total}</span></div>`).join("")}</div>` : `<div class="empty-state"><strong>Tidak ada sesi untuk dihitung</strong><p>Periksa pemetaan sheet utama.</p></div>`;
+        body.innerHTML = weeks.length ? `<div class="progress-weeks">${weeks.map(w => `<div class="week-row"><span class="week-label">Week ${w.week}</span><div class="week-track" role="progressbar" aria-label="Sessions completed in week ${w.week}" aria-valuemin="0" aria-valuemax="${w.total}" aria-valuenow="${w.done}"><div class="week-fill" style="width:${w.total ? Math.round(w.done / w.total * 100) : 0}%"></div></div><span class="week-count">${w.done} of ${w.total}</span></div>`).join("")}</div>` : `<div class="empty-state"><strong>No sessions to track</strong><p>Check the main sheet mapping.</p></div>`;
       }
       function renderReminder() {
         $("#reminder-time").value = state.reminder.time || "";
         $("#reminder-enabled").value = state.reminder.enabled ? "on" : "off";
       }
+      async function registerReminderWorker() {
+        if (!window.isSecureContext) throw new Error("Notifications require HTTPS or localhost. Open the deployed site over HTTPS.");
+        if (!("Notification" in window) || !("serviceWorker" in navigator)) throw new Error("This browser does not support web notifications.");
+        reminderRegistration = await navigator.serviceWorker.register(new URL("sw.js", document.baseURI));
+        await navigator.serviceWorker.ready;
+        return reminderRegistration;
+      }
+      function localDateKey(date = new Date()) {
+        return `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, "0")}-${String(date.getDate()).padStart(2, "0")}`;
+      }
+      async function checkReminder() {
+        if (reminderInFlight || !state.reminder.enabled || !state.reminder.time || !("Notification" in window) || !("serviceWorker" in navigator) || Notification.permission !== "granted") return;
+        const now = new Date();
+        const currentTime = `${String(now.getHours()).padStart(2, "0")}:${String(now.getMinutes()).padStart(2, "0")}`;
+        const today = localDateKey(now);
+        if (currentTime < state.reminder.time || state.reminder.lastSentDate === today) return;
+        reminderInFlight = true;
+        try {
+          const registration = reminderRegistration || await navigator.serviceWorker.ready;
+          const plan = activePlan();
+          const next = nextSession(plan);
+          const body = next ? `${next.topic || next.details || next.type || "Your next session"}${next.day ? ` · ${next.day}` : ""}` : "Take a moment to check your training plan.";
+          await registration.showNotification("MyTracker reminder", { body, icon: "assets/mytracker-icon-192.png", badge: "assets/mytracker-icon-192.png", tag: "mytracker-daily-reminder", renotify: false, data: { url: document.baseURI } });
+          state.reminder.lastSentDate = today;
+          persistState();
+        } catch (error) {
+          $("#reminder-feedback").textContent = "The reminder could not be sent. Check notification permissions in your browser settings.";
+          console.warn("Unable to show reminder notification.", error);
+        } finally {
+          reminderInFlight = false;
+        }
+      }
+      function startReminderChecks() {
+        if (reminderTimer) clearInterval(reminderTimer);
+        if (!state.reminder.enabled) return;
+        checkReminder();
+        reminderTimer = setInterval(checkReminder, 15000);
+      }
 
       function xmlDoc(text, name) {
         const doc = new DOMParser().parseFromString(text, "application/xml");
-        if (doc.querySelector("parsererror")) throw new Error(`Struktur XML ${name} tidak valid.`);
+        if (doc.querySelector("parsererror")) throw new Error(`The ${name} XML structure is invalid.`);
         return doc;
       }
       function normalizePackagePath(base, target) {
@@ -653,20 +765,20 @@
         return out.join("/");
       }
       async function inflateRaw(bytes) {
-        if (typeof DecompressionStream === "undefined") throw new Error("Browser ini belum menyediakan pembaca ZIP untuk file Excel. Buka aplikasi di Chrome atau Edge versi terbaru.");
+        if (typeof DecompressionStream === "undefined") throw new Error("This browser cannot read Excel ZIP files. Open MyTracker in a recent version of Chrome or Edge.");
         try {
           const stream = new Blob([bytes]).stream().pipeThrough(new DecompressionStream("deflate-raw"));
           return new Uint8Array(await new Response(stream).arrayBuffer());
-        } catch (error) { throw new Error("Sheet Excel tidak dapat dibuka. Pastikan file .xlsx tidak rusak atau dilindungi sandi."); }
+        } catch (error) { throw new Error("The Excel sheet could not be opened. Check that the .xlsx file is not damaged or password-protected."); }
       }
       async function unzipXlsx(buffer) {
         const bytes = new Uint8Array(buffer); const view = new DataView(buffer);
         const min = Math.max(0, bytes.length - 65557); let eocd = -1;
         for (let p = bytes.length - 22; p >= min; p--) { if (view.getUint32(p, true) === 0x06054b50) { eocd = p; break; } }
-        if (eocd < 0) throw new Error("File ini tidak memiliki struktur .xlsx yang dikenali.");
+        if (eocd < 0) throw new Error("This file does not have a recognized .xlsx structure.");
         const entryCount = view.getUint16(eocd + 10, true); let cursor = view.getUint32(eocd + 16, true); const decoder = new TextDecoder(); const files = new Map();
         for (let i = 0; i < entryCount; i++) {
-          if (view.getUint32(cursor, true) !== 0x02014b50) throw new Error("Daftar sheet Excel tidak dapat dibaca.");
+          if (view.getUint32(cursor, true) !== 0x02014b50) throw new Error("The Excel sheet list could not be read.");
           const method = view.getUint16(cursor + 10, true); const size = view.getUint32(cursor + 20, true); const nameLength = view.getUint16(cursor + 28, true); const extraLength = view.getUint16(cursor + 30, true); const commentLength = view.getUint16(cursor + 32, true); const localOffset = view.getUint32(cursor + 42, true);
           const name = decoder.decode(bytes.subarray(cursor + 46, cursor + 46 + nameLength)); const localNameLength = view.getUint16(localOffset + 26, true); const localExtraLength = view.getUint16(localOffset + 28, true); const dataStart = localOffset + 30 + localNameLength + localExtraLength; const packed = bytes.subarray(dataStart, dataStart + size);
           let content;
@@ -692,7 +804,7 @@
             if (formula) { formulaCount++; if (!value) uncachedFormulaCount++; }
             if (type === "s" && value !== "") value = sharedStrings[Number(value)] ?? value;
             else if (type === "inlineStr") value = [...cell.getElementsByTagNameNS(MAIN_NS, "t")].map(t => t.textContent || "").join("");
-            else if (type === "b") value = value === "1" ? "Ya" : "Tidak";
+            else if (type === "b") value = value === "1" ? "Yes" : "No";
             if (value !== "") values[index] = value;
             if (formula) formulas[index] = formula;
           }
@@ -722,12 +834,12 @@
         return [...doc.getElementsByTagNameNS(MAIN_NS, "si")].map(si => [...si.getElementsByTagNameNS(MAIN_NS, "t")].map(t => t.textContent || "").join(""));
       }
       async function parseWorkbook(file) {
-        if (!file.name.toLowerCase().endsWith(".xlsx")) throw new Error("Pilih workbook .xlsx. Format .xls belum didukung.");
-        if (file.size > 20 * 1024 * 1024) throw new Error("Ukuran file melebihi batas 20 MB untuk versi lokal ini.");
+        if (!file.name.toLowerCase().endsWith(".xlsx")) throw new Error("Choose an .xlsx workbook. The .xls format is not supported.");
+        if (file.size > 20 * 1024 * 1024) throw new Error("The file exceeds the 20 MB limit for this local version.");
         const files = await unzipXlsx(await file.arrayBuffer());
         const sharedStrings = readSharedStrings(files);
         const workbookText = files.get("xl/workbook.xml"); const relText = files.get("xl/_rels/workbook.xml.rels");
-        if (!workbookText || !relText) throw new Error("Workbook tidak berisi daftar sheet yang bisa dibaca.");
+        if (!workbookText || !relText) throw new Error("The workbook does not contain a readable sheet list.");
         const workbook = xmlDoc(workbookText, "workbook"); const relDoc = xmlDoc(relText, "workbook relationships");
         const relationships = new Map([...relDoc.getElementsByTagNameNS(PACKAGE_REL_NS, "Relationship")].map(rel => [rel.getAttribute("Id"), rel.getAttribute("Target")]));
         const sheets = [];
@@ -737,7 +849,7 @@
           const path = normalizePackagePath("xl", target); const sheetText = files.get(path);
           if (sheetText) sheets.push(parseWorksheet(sheetText, name, sharedStrings));
         }
-        if (!sheets.length) throw new Error("Workbook tidak memiliki sheet yang bisa dibaca.");
+        if (!sheets.length) throw new Error("The workbook does not contain any readable sheets.");
         importWork = { fileName: file.name, sheets, sharedStrings, detectedProfile: detectProfile(sheets), profile: detectProfile(sheets), primarySheet: "", mapping: {}, parsedAt: new Date().toISOString() };
         return importWork;
       }
@@ -755,8 +867,8 @@
       function routeFor(profile, sheetName) {
         const config = CONFIGS[profile]; const route = Object.entries(config.routes).find(([name]) => normalize(name) === normalize(sheetName));
         if (route) return route[1];
-        if (config.mainSheet && normalize(sheetName) === normalize(config.mainSheet)) return [profile === "analyst" ? "Jadwal sesi belajar" : profile === "hm" ? "Jadwal sesi lari" : "Daftar sesi", "Data inti yang masuk ke ceklis dan progres", "Menjadi sumber baris sesi yang ditampilkan di Ceklis sesi."];
-        return ["Sheet belum dipetakan", "Periksa isi sheet sebelum menyimpannya sebagai referensi", "Dibiarkan terpisah agar kontennya tidak keliru dianggap sebagai sesi."];
+        if (config.mainSheet && normalize(sheetName) === normalize(config.mainSheet)) return [profile === "analyst" ? "Study schedule" : profile === "hm" ? "Running schedule" : "Session list", "Core data used by the checklist and progress views", "This is the source of sessions shown in the session checklist."];
+        return ["Unmapped sheet", "Review this sheet before saving it as a reference", "Kept separate so its contents are not mistaken for sessions."];
       }
       function renderImportMapping() {
         if (!importWork) return;
@@ -775,21 +887,21 @@
           importWork.mapping = { _sheet: importWork.primarySheet, _profile: importWork.profile };
           for (const field of expected) importWork.mapping[field.key] = matchHeader(headers, field.aliases)?.index ?? -1;
         }
-        $("#import-detection-copy").textContent = importWork.detectedProfile === "generic" ? "Struktur belum cocok dengan dua format yang dikenal. Pilih jenis plan dan sheet utama." : `Terdeteksi dari nama sheet. Pastikan pilihan kolom di bawah sudah benar.`;
-        $("#import-file-badge").textContent = `${importWork.sheets.length} sheet`;
+        $("#import-detection-copy").textContent = importWork.detectedProfile === "generic" ? "This structure does not match either recognized format. Choose a plan type and main sheet." : "Detected from sheet names. Check that the column matches below are correct.";
+        $("#import-file-badge").textContent = `${importWork.sheets.length} sheets`;
         $("#routing-list").innerHTML = importWork.sheets.map(sheet => {
           const [role, detail, why] = routeFor(importWork.profile, sheet.name);
           const rowCount = sheet.rows.filter(row => row.values.some(v => v !== "" && v !== undefined)).length;
-          return `<div class="routing-row"><span class="routing-sheet">${escapeHtml(sheet.name)}</span><span><span class="routing-role">${escapeHtml(role)}</span><span class="routing-detail">${escapeHtml(detail)} · ${rowCount} baris berisi data</span><span class="routing-why"><strong>Kenapa:</strong> ${escapeHtml(why)}</span></span></div>`;
+          return `<div class="routing-row"><span class="routing-sheet">${escapeHtml(sheet.name)}</span><span><span class="routing-role">${escapeHtml(role)}</span><span class="routing-detail">${escapeHtml(detail)} · ${rowCount} rows with data</span><span class="routing-why"><strong>Why:</strong> ${escapeHtml(why)}</span></span></div>`;
         }).join("");
         const mapHost = $("#mapping-fields");
         if (!headerRow || !headers.length) {
-          mapHost.innerHTML = `<div class="notice"><strong>Header sesi belum dikenali.</strong> Pilih sheet utama lain atau periksa susunan header workbook.</div>`;
+          mapHost.innerHTML = `<div class="notice"><strong>Session headers not recognized.</strong> Choose another main sheet or check the workbook header row.</div>`;
         } else {
-          mapHost.innerHTML = expected.map(field => `<div class="mapping-row"><label for="map-${field.key}">${escapeHtml(field.label)}</label><select id="map-${field.key}" data-map-key="${field.key}"><option value="-1">Jangan petakan</option>${headers.map(h => `<option value="${h.index}" ${Number(importWork.mapping[field.key]) === h.index ? "selected" : ""}>${escapeHtml(h.label)}</option>`).join("")}</select></div>`).join("");
+          mapHost.innerHTML = expected.map(field => `<div class="mapping-row"><label for="map-${field.key}">${escapeHtml(field.label)}</label><select id="map-${field.key}" data-map-key="${field.key}"><option value="-1">Do not map</option>${headers.map(h => `<option value="${h.index}" ${Number(importWork.mapping[field.key]) === h.index ? "selected" : ""}>${escapeHtml(h.label)}</option>`).join("")}</select></div>`).join("");
         }
         const formulaCount = selectedSheet?.formulaCount || 0; const uncached = selectedSheet?.uncachedFormulaCount || 0;
-        $("#formula-warning").innerHTML = formulaCount ? `<div class="notice"><strong>${formulaCount} sel formula ditemukan pada sheet sesi.</strong> Pratinjau memakai nilai terakhir yang tersimpan di file${uncached ? `; ${uncached} formula tidak memiliki nilai tersimpan` : ""}. Jika tanggal atau target memakai rumus yang baru berubah, hitung ulang dan simpan workbook di Excel sebelum mengimpor.</div>` : "";
+        $("#formula-warning").innerHTML = formulaCount ? `<div class="notice"><strong>${formulaCount} formula cells found in the session sheet.</strong> The preview uses the last values saved in the file${uncached ? `; ${uncached} formulas have no saved value` : ""}. If a date or target formula has changed, recalculate and save the workbook in Excel before importing.</div>` : "";
         renderImportPreview();
       }
       function selectedMappingRows() {
@@ -823,12 +935,12 @@
         if (!importWork) return;
         const { sessions, headerRow } = selectedMappingRows();
         const config = CONFIGS[importWork.profile];
-        $("#preview-count").textContent = `${sessions.length} ${config.countLabel} terdeteksi${headerRow ? ` dari baris header ${headerRow.rowNumber}` : ""}.`;
-        $("#preview-status").textContent = sessions.length ? "Siap ditinjau" : "Belum siap";
+        $("#preview-count").textContent = `${sessions.length} ${config.countLabel} detected${headerRow ? ` from header row ${headerRow.rowNumber}` : ""}.`;
+        $("#preview-status").textContent = sessions.length ? "Ready to review" : "Not ready";
         const previewFields = config.fields.filter(f => Number(importWork.mapping[f.key]) >= 0).slice(0,5);
-        $("#preview-table").innerHTML = sessions.length && previewFields.length ? `<table><thead><tr>${previewFields.map(f => `<th>${escapeHtml(f.label)}</th>`).join("")}</tr></thead><tbody>${sessions.slice(0,6).map(session => `<tr>${previewFields.map(f => `<td>${escapeHtml(session[f.key])}</td>`).join("")}</tr>`).join("")}</tbody></table>` : `<div class="table-empty">Pilih sheet utama dan petakan setidaknya satu kolom sesi untuk melihat pratinjau.</div>`;
+        $("#preview-table").innerHTML = sessions.length && previewFields.length ? `<table><thead><tr>${previewFields.map(f => `<th>${escapeHtml(f.label)}</th>`).join("")}</tr></thead><tbody>${sessions.slice(0,6).map(session => `<tr>${previewFields.map(f => `<td>${escapeHtml(session[f.key])}</td>`).join("")}</tr>`).join("")}</tbody></table>` : `<div class="table-empty">Choose a main sheet and map at least one session column to preview the data.</div>`;
         $("#save-import-button").disabled = sessions.length === 0 || !headerRow;
-        $("#save-helper").textContent = sessions.length ? "Data akan disimpan lokal dan sheet pendukung tetap dipisahkan." : "Belum ada sesi yang bisa disimpan.";
+        $("#save-helper").textContent = sessions.length ? "Data will be saved locally; supporting sheets will remain separate." : "No sessions to save yet.";
       }
       function routeSupportSheets() {
         const profile = importWork.profile; const config = CONFIGS[profile];
@@ -868,8 +980,8 @@
         const existing = state.plans.findIndex(p => p.fileName === plan.fileName);
         if (existing >= 0) state.plans[existing] = plan; else state.plans.push(plan);
         state.activePlanId = plan.id;
-        if (!persistState()) { $("#import-feedback").innerHTML = `<div class="notice"><strong>Penyimpanan lokal penuh.</strong> Plan belum disimpan. Hapus data situs lama dari pengaturan browser, lalu coba lagi.</div>`; return; }
-        $("#import-feedback").innerHTML = `<div class="notice info"><strong>Plan tersimpan.</strong> ${escapeHtml(sessions.length)} sesi disimpan. Sheet pendukung dan log tetap berada di bagian terpisah.</div>`;
+        if (!persistState()) { $("#import-feedback").innerHTML = `<div class="notice"><strong>Local storage is full.</strong> The plan was not saved. Clear older site data in your browser settings, then try again.</div>`; return; }
+        $("#import-feedback").innerHTML = `<div class="notice info"><strong>Plan saved.</strong> ${escapeHtml(sessions.length)} sessions saved. Supporting sheets and logs remain separate.</div>`;
         $("#workbook-file").value = "";
         importWork = null;
         $("#import-mapping-panel").hidden = true;
@@ -897,23 +1009,23 @@
         const plan = { id: `plan-${Date.now()}-${Math.random().toString(36).slice(2,7)}`, name, profile, fileName: "", importedAt: new Date().toISOString(), importVersion: 2, manual: true, sessions: [], supportSheets: [], logs: [] };
         const previous = state.activePlanId;
         state.plans.push(plan); state.activePlanId = plan.id;
-        if (!persistState()) { state.plans.pop(); state.activePlanId = previous; $("#plan-feedback").textContent = "Plan belum bisa disimpan di perangkat ini."; return; }
+        if (!persistState()) { state.plans.pop(); state.activePlanId = previous; $("#plan-feedback").textContent = "The plan could not be saved on this device."; return; }
         $("#add-plan-dialog").close();
         setView("plans");
-        $("#plan-feedback").innerHTML = `<div class="notice info"><strong>Plan dibuat.</strong> Tambahkan sesi dari menu Ceklis sesi atau impor workbook.</div>`;
+        $("#plan-feedback").innerHTML = `<div class="notice info"><strong>Plan created.</strong> Add sessions from the Session checklist or import a workbook.</div>`;
       }
       function removePlan(planId) {
         const index = state.plans.findIndex(plan => plan.id === planId);
         if (index < 0) return;
         const plan = state.plans[index];
-        if (!confirm(`Hapus plan “${plan.name}”? Sesi dan catatan yang tersimpan di dalam plan ini juga akan dihapus dari perangkat ini.`)) return;
+        if (!confirm(`Remove the plan “${plan.name}”? Its sessions and notes will also be deleted from this device.`)) return;
         const previousActiveId = state.activePlanId;
         state.plans.splice(index, 1);
         if (previousActiveId === planId) state.activePlanId = state.plans[0]?.id || null;
         if (!persistState()) {
           state.plans.splice(index, 0, plan);
           state.activePlanId = previousActiveId;
-          alert("Plan belum dapat dihapus karena perubahan tidak bisa disimpan di perangkat ini.");
+          alert("The plan could not be removed because this change could not be saved on this device.");
           return;
         }
         renderAll();
@@ -928,12 +1040,12 @@
         const detail = String(data.get("details") || "").trim();
         const session = {
           week: String(data.get("week") || "1"), day: String(data.get("day") || ""), date: String(data.get("date") || ""),
-          type: plan.profile === "analyst" ? "Belajar" : "Manual", topic: plan.profile === "analyst" ? title : "", details: plan.profile === "analyst" ? detail : title,
+          type: plan.profile === "analyst" ? "Study" : "Manual", topic: plan.profile === "analyst" ? title : "", details: plan.profile === "analyst" ? detail : title,
           steps: plan.profile === "analyst" ? detail : "", plannedDistance: String(data.get("plannedDistance") || ""),
-          duration: String(data.get("duration") || ""), status: "Belum", completed: false, notes: "", manual: true
+          duration: String(data.get("duration") || ""), status: "Pending", completed: false, notes: "", manual: true
         };
         plan.sessions.push(session); state.activePlanId = plan.id;
-        if (!persistState()) { plan.sessions.pop(); alert("Sesi belum bisa disimpan di perangkat ini."); return; }
+        if (!persistState()) { plan.sessions.pop(); alert("The session could not be saved on this device."); return; }
         event.currentTarget.reset(); $("#manual-week").value = "1"; event.currentTarget.hidden = true;
         renderAll();
       }
@@ -947,19 +1059,19 @@
         if (check) {
           const plan = state.plans.find(p => p.id === $("#session-plan-select").value) || activePlan();
           const session = sessionsFor(plan)[Number(check.dataset.sessionIndex)];
-          if (session) { session.completed = check.checked; if (!persistState()) alert("Perubahan belum bisa disimpan di perangkat ini."); renderAll(); }
+          if (session) { session.completed = check.checked; if (!persistState()) alert("This change could not be saved on this device."); renderAll(); }
         }
       });
       $("#workbook-file").addEventListener("change", async event => {
         const file = event.target.files?.[0]; if (!file) return;
         importWork = null; $("#import-mapping-panel").hidden = true;
-        $("#import-feedback").innerHTML = `<div class="notice info">Membaca daftar sheet dan kolom di perangkat ini…</div>`;
+        $("#import-feedback").innerHTML = `<div class="notice info">Reading workbook sheets and columns on this device…</div>`;
         try {
           await parseWorkbook(file);
           $("#import-feedback").innerHTML = "";
           $("#import-mapping-panel").hidden = false;
           renderImportMapping();
-        } catch (error) { $("#import-feedback").innerHTML = `<div class="notice"><strong>Workbook belum bisa dibaca.</strong> ${escapeHtml(error.message || "Periksa file dan coba lagi.")}</div>`; }
+        } catch (error) { $("#import-feedback").innerHTML = `<div class="notice"><strong>The workbook could not be read.</strong> ${escapeHtml(error.message || "Check the file and try again.")}</div>`; }
       });
       $("#profile-select").addEventListener("change", event => { if (!importWork) return; importWork.profile = event.target.value; importWork.primarySheet = findSheet(importWork.sheets, CONFIGS[importWork.profile].mainSheet)?.name || ""; importWork.mapping = {}; renderImportMapping(); });
       $("#primary-sheet-select").addEventListener("change", event => { if (!importWork) return; importWork.primarySheet = event.target.value; importWork.mapping = {}; renderImportMapping(); });
@@ -968,9 +1080,39 @@
         importWork.mapping[select.dataset.mapKey] = Number(select.value); renderImportPreview();
       });
       $("#save-import-button").addEventListener("click", saveImportedPlan);
-      $("#save-reminder").addEventListener("click", () => {
-        state.reminder = { time: $("#reminder-time").value, enabled: $("#reminder-enabled").value === "on" };
-        const ok = persistState(); $("#reminder-feedback").textContent = ok ? "Preferensi disimpan di perangkat ini." : "Tidak dapat menyimpan preferensi lokal.";
+      $("#save-reminder").addEventListener("click", async () => {
+        const time = $("#reminder-time").value;
+        const enabled = $("#reminder-enabled").value === "on";
+        const feedback = $("#reminder-feedback");
+        if (enabled && !time) { feedback.textContent = "Choose a reminder time first."; return; }
+        if (enabled) {
+          if (!window.isSecureContext) { $("#reminder-enabled").value = "off"; feedback.textContent = "Notifications require HTTPS or localhost. Open the deployed site over HTTPS."; return; }
+          if (!("Notification" in window) || !("serviceWorker" in navigator)) { $("#reminder-enabled").value = "off"; feedback.textContent = "This browser does not support web notifications."; return; }
+          try {
+            const permission = Notification.permission === "granted" ? "granted" : await Notification.requestPermission();
+            if (permission !== "granted") {
+              $("#reminder-enabled").value = "off";
+              feedback.textContent = permission === "denied" ? "Notifications are blocked. Allow them in your browser's site settings, then try again." : "Notification permission was not granted.";
+              return;
+            }
+            await registerReminderWorker();
+          } catch (error) {
+            $("#reminder-enabled").value = "off";
+            feedback.textContent = error.message || "Notifications are not available in this browser.";
+            return;
+          }
+        }
+        const previous = state.reminder;
+        state.reminder = { ...previous, time, enabled, lastSentDate: enabled ? previous.lastSentDate : "" };
+        if (!persistState()) {
+          state.reminder = previous;
+          feedback.textContent = "Could not save reminder settings on this device.";
+          renderReminder();
+          return;
+        }
+        if (enabled) startReminderChecks();
+        else { if (reminderTimer) clearInterval(reminderTimer); reminderTimer = null; }
+        feedback.textContent = enabled ? `Reminder set for ${time}. Keep MyTracker open for it to be checked.` : "Reminder turned off.";
       });
       document.addEventListener("click", event => {
         const viewButton = event.target.closest("[data-view]");
@@ -994,6 +1136,10 @@
       applyTheme(document.documentElement.dataset.theme || "dark");
       const formatted = formatDate(); $("#desktop-date").textContent = formatted; $("#mobile-date").textContent = formatted;
       loadState(); renderAll();
+      if (state.reminder.enabled && window.isSecureContext && "Notification" in window && Notification.permission === "granted" && "serviceWorker" in navigator) {
+        registerReminderWorker().then(startReminderChecks).catch(error => { $("#reminder-feedback").textContent = error.message; });
+      }
+      document.addEventListener("visibilitychange", () => { if (!document.hidden) checkReminder(); });
     })();
   </script>
 </body>

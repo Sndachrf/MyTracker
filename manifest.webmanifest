@@ -2,7 +2,7 @@
   "id": "./",
   "name": "MyTracker",
   "short_name": "MyTracker",
-  "description": "Rencanakan sesi latihan dan catat progres MyTracker.",
+  "description": "Plan training sessions and track your progress with MyTracker.",
   "start_url": "./",
   "scope": "./",
   "display": "standalone",
